@@ -1,0 +1,1816 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Smart PDS Sale Report</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+
+<style>
+:root{
+  --primary:#1d4ed8;
+  --bg:#f4f6fb;
+  --card:#ffffff;
+  --border:#c7d2fe;
+  --muted:#64748b;
+  --ok:#0f766e;
+  --warn:#b45309;
+  --bad:#b91c1c;
+}
+*{box-sizing:border-box}
+body{font-family:Arial;background:var(--bg);padding:16px;margin:0}
+.hidden{display:none}
+
+#app, #loginBox, #signupBox, #passwordBox, #changePasswordBox{animation:fadeUp .35s ease both}
+@keyframes fadeUp{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+
+ 
+#loginBox, #signupBox, #passwordBox, #changePasswordBox{
+  width: min(440px, calc(100% - 32px));
+  margin: clamp(32px, 6vh, 80px) auto;
+  padding: 30px 28px 22px;
+  background: color-mix(in srgb, var(--card) 92%, transparent);
+  border: 1px solid color-mix(in srgb, var(--primary) 14%, rgba(0,0,0,.08));
+  border-radius: 18px;
+  box-shadow: 0 18px 45px rgba(0,0,0,.12), 0 2px 10px rgba(0,0,0,.06);
+  text-align: center;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  position: relative;
+  overflow: hidden;
+}
+#loginBox::before, #signupBox::before, #passwordBox::before, #changePasswordBox::before{
+  content:"";
+  position:absolute;
+  inset: 0 0 auto 0;
+  height: 120px;
+  background: radial-gradient(120% 120% at 20% 10%,
+      color-mix(in srgb, var(--primary) 22%, transparent) 0%,
+      transparent 55%);
+  pointer-events:none;
+}
+#loginBox h2, #signupBox h2, #passwordBox h2, #changePasswordBox h2{
+  margin: 0 0 14px;
+  font-size: 22px;
+  letter-spacing: .2px;
+  color: color-mix(in srgb, var(--primary) 92%, #111);
+}
+#loginBox input, #signupBox input, #passwordBox input, #changePasswordBox input,
+#loginBox select, #signupBox select, #passwordBox select, #changePasswordBox select{
+  width: 100%;
+  box-sizing: border-box;
+  padding: 12px 12px;
+  margin: 10px 0;
+  border-radius: 12px;
+  border: 1px solid color-mix(in srgb, var(--primary) 10%, rgba(0,0,0,.14));
+  background: color-mix(in srgb, var(--card) 86%, #fff 14%);
+  outline: none;
+  transition: border-color .18s ease, box-shadow .18s ease, transform .06s ease;
+}
+#loginBox input:focus, #signupBox input:focus, #passwordBox input:focus, #changePasswordBox input:focus,
+#loginBox select:focus, #signupBox select:focus, #passwordBox select:focus, #changePasswordBox select:focus{
+  border-color: color-mix(in srgb, var(--primary) 55%, rgba(0,0,0,.12));
+  box-shadow: 0 0 0 4px color-mix(in srgb, var(--primary) 18%, transparent);
+}
+#loginBox button, #signupBox button, #passwordBox button, #changePasswordBox button{
+  width: 100%;
+  margin-top: 14px;
+  padding: 12px 14px;
+  border: none;
+  border-radius: 12px;
+  background: var(--primary);
+  color: #fff;
+  font-weight: 800;
+  letter-spacing: .2px;
+  cursor: pointer;
+  box-shadow: 0 10px 22px color-mix(in srgb, var(--primary) 25%, transparent);
+  transition: transform .08s ease, box-shadow .18s ease, filter .18s ease;
+}
+#loginBox button:hover, #signupBox button:hover, #passwordBox button:hover, #changePasswordBox button:hover{
+  filter: brightness(1.03);
+  box-shadow: 0 14px 28px color-mix(in srgb, var(--primary) 28%, transparent);
+}
+#loginBox button:active, #signupBox button:active, #passwordBox button:active, #changePasswordBox button:active{ transform: translateY(1px); }
+
+.small-link{
+  display: inline-block;
+  margin-top: 12px;
+  cursor: pointer;
+  color: var(--primary);
+  font-weight: 800;
+  text-decoration: none;
+  position: relative;
+}
+.small-link::after{
+  content:"";
+  position:absolute;
+  left:0; right:0; bottom:-3px;
+  height:2px;
+  background: currentColor;
+  opacity: .25;
+  transform: scaleX(.55);
+  transform-origin: left;
+  transition: transform .18s ease, opacity .18s ease;
+}
+.small-link:hover::after{ opacity: .55; transform: scaleX(1); }
+
+#controls{text-align:center;margin-bottom:12px}
+input,select,button{padding:9px 14px;border-radius:10px;margin:4px;border:1px solid var(--border);font-size:14px}
+
+button{
+  background:var(--primary);color:#fff;border:none;cursor:pointer;
+  transition:transform .15s ease, box-shadow .2s ease, filter .2s ease, opacity .2s ease;
+  box-shadow:0 10px 20px rgba(29,78,216,.18);
+  position:relative;overflow:hidden;
+}
+button:hover{transform:translateY(-2px);box-shadow:0 16px 28px rgba(29,78,216,.22);filter:brightness(1.05)}
+button:active{transform:translateY(0) scale(.98);box-shadow:0 8px 16px rgba(29,78,216,.16)}
+button:disabled{opacity:.65;cursor:not-allowed;transform:none;box-shadow:none}
+button.is-busy{pointer-events:none;opacity:.9}
+
+.topLinkBtn{
+  display:inline-flex;
+  align-items:center;
+  gap:6px;
+  padding:6px 12px;
+  border-radius:999px;
+  background:#10b981;
+  color:#fff;
+  font-weight:800;
+  text-decoration:none;
+  box-shadow:0 6px 14px rgba(0,0,0,.10);
+  transition:.2s ease;
+}
+.topLinkBtn:hover{transform:translateY(-2px);filter:brightness(1.05)}
+
+.top-info{display:flex;justify-content:space-between;font-weight:600;margin-bottom:6px}
+.center-text{flex:1;text-align:center}
+.main-title{text-align:center;font-size:18px;font-weight:700}
+.upload-time{color:red}
+
+.stats-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:16px;margin:18px 0}
+.stat-card{color:#fff;padding:22px;border-radius:16px;text-align:center;font-weight:700}
+.stat-card h3{margin-top:8px;font-size:28px}
+.blue{background:#2563eb}
+.green{background:#15803d}
+.orange{background:#d97706}
+.purple{background:#7e22ce}
+.olive{background:#4d7c0f}
+.red{background:#b91c1c}
+
+.count-box{
+  margin:10px 0;padding:14px 14px;border-radius:10px;font-weight:900;
+  display:flex;align-items:center;gap:10px
+}
+.count-dot{width:18px;height:18px;border-radius:999px;box-shadow:0 6px 14px rgba(0,0,0,.10)}
+.count-red{background:#fee2e2;border-left:6px solid #dc2626}
+.count-red .count-dot{background:#ef4444}
+.count-green{background:#dcfce7;border-left:6px solid #16a34a}
+.count-green .count-dot{background:#22c55e}
+.count-box b{font-size:18px}
+.count-box .num{margin-left:auto;font-size:18px}
+
+table{width:100%;border-collapse:collapse;background:#fff;margin-top:18px}
+th,td{border:1px solid var(--border);padding:8px;text-align:center}
+th{background:#2563eb;color:#fff}
+tfoot td{background:#e0f2fe;font-weight:800}
+.row-missing{background:#fee2e2!important}
+.row-duplicate{background:#dcfce7!important}
+
+ 
+#loader{position:fixed;inset:0;background:rgba(255,255,255,.90);display:none;align-items:center;justify-content:center;z-index:9999}
+.spinner{width:50px;height:50px;border:6px solid var(--border);border-top:6px solid var(--primary);border-radius:50%;animation:spin 1s linear infinite;margin:0 auto}
+@keyframes spin{to{transform:rotate(360deg)}}
+#progressWrap{width:320px;max-width:85vw;margin-top:12px;background:#e0e7ff;border-radius:999px;overflow:hidden;border:1px solid var(--border)}
+#progressBar{height:10px;width:0%;background:var(--primary);transition:width .15s linear}
+#progressText{margin-top:10px;font-weight:900;color:var(--primary);text-align:center}
+#loadingTitle{margin-top:10px;font-weight:800;color:var(--primary);text-align:center}
+
+ 
+#userBar{
+  max-width:1100px;margin:0 auto 10px;background:var(--card);
+  border:1px solid var(--border);border-radius:14px;padding:10px 12px;
+  display:flex;gap:10px;align-items:center;justify-content:space-between;
+  box-shadow:0 10px 22px rgba(0,0,0,.06)
+}
+#userBar .left{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.pill{
+  display:inline-flex;align-items:center;gap:8px;
+  background:#eef2ff;border:1px solid var(--border);
+  color:var(--primary);font-weight:900;padding:6px 10px;border-radius:999px
+}
+.pill small{font-weight:800;color:var(--muted)}
+.langBtn{background:var(--ok)}
+.langBtn:hover{filter:brightness(1.07)}
+
+ 
+#toastWrap{
+  position:fixed;
+  top:14px; left:50%; transform:translateX(-50%);
+  z-index:99999;
+  display:flex;flex-direction:column;gap:10px;
+  width:min(560px, 92vw);
+}
+.toast{
+  background:#fff;border:1px solid var(--border);
+  border-radius:16px;box-shadow:0 20px 45px rgba(0,0,0,.14);
+  padding:12px 12px;
+  display:flex;gap:10px;align-items:flex-start;
+  animation:toastIn .18s ease-out both;
+}
+@keyframes toastIn{from{opacity:0;transform:translateY(-8px)}to{opacity:1;transform:translateY(0)}}
+.toast .icon{
+  width:36px;height:36px;border-radius:12px;
+  display:flex;align-items:center;justify-content:center;
+  color:#fff;font-weight:900;flex:0 0 auto;
+}
+.toast .txt{flex:1}
+.toast .title{font-weight:900;margin:0 0 3px}
+.toast .msg{margin:0;color:#334155;font-weight:700}
+.toast .x{cursor:pointer;border:none;background:transparent;font-size:18px;line-height:1;color:#64748b}
+.toast.ok .icon{background:var(--ok)}
+.toast.warn .icon{background:var(--warn)}
+.toast.bad .icon{background:var(--bad)}
+
+ 
+.eyeBtn{
+  position:absolute; right:10px; top:50%;
+  transform:translateY(-50%);
+  cursor:pointer;
+  user-select:none;
+  font-size:18px;
+  opacity:.85;
+}
+.eyeBtn:hover{opacity:1}
+
+ 
+.mobilePopup{
+  position:fixed;
+  inset:0;
+  background:rgba(15,23,42,.45);
+  backdrop-filter:blur(5px);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:18px;
+  opacity:0;
+  visibility:hidden;
+  transition:opacity .25s ease, visibility .25s ease;
+  z-index:10000;
+}
+.mobilePopup.show{
+  opacity:1;
+  visibility:visible;
+}
+.mobilePopupCard{
+  width:100%;
+  max-width:420px;
+  background:linear-gradient(135deg,rgba(99,102,241,.96),rgba(124,58,237,.95));
+  color:#fff;
+  border-radius:24px;
+  padding:22px;
+  box-shadow:0 20px 55px rgba(0,0,0,.26);
+  transform:translateY(18px) scale(.96);
+  opacity:0;
+  transition:transform .28s ease, opacity .28s ease;
+}
+.mobilePopup.show .mobilePopupCard{
+  transform:translateY(0) scale(1);
+  opacity:1;
+}
+.mobileHead{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:10px;
+  margin-bottom:18px;
+}
+.mobileHeadTitle{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  font-size:18px;
+  font-weight:800;
+}
+.mobileIconBox{
+  width:38px;
+  height:38px;
+  border-radius:12px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background:rgba(255,255,255,.18);
+  font-size:18px;
+}
+.mobileCloseBtn{
+  width:34px;
+  height:34px;
+  border:none;
+  border-radius:10px;
+  background:rgba(255,255,255,.16);
+  color:#fff;
+  font-size:20px;
+  cursor:pointer;
+}
+.mobileCloseBtn:hover{
+  background:rgba(255,255,255,.24);
+}
+.mobileGrid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:12px;
+  margin-bottom:14px;
+}
+.mobilePopup label{
+  display:block;
+  font-size:13px;
+  font-weight:700;
+  margin-bottom:7px;
+  color:rgba(255,255,255,.94);
+}
+.mobilePopup input,
+.mobilePopup select{
+  width:100%;
+  border:none;
+  outline:none;
+  border-radius:14px;
+  padding:13px 14px;
+  font-size:15px;
+  color:#111827;
+  background:rgba(255,255,255,.93);
+}
+.mobilePopup input:focus,
+.mobilePopup select:focus{
+  background:#fff;
+  box-shadow:0 0 0 4px rgba(255,255,255,.18);
+}
+.mobileSubmitBtn{
+  width:100%;
+  border:none;
+  border-radius:14px;
+  padding:14px;
+  background:linear-gradient(90deg,#06b6d4,#2563eb);
+  color:#fff;
+  font-size:16px;
+  font-weight:800;
+  cursor:pointer;
+  margin-top:4px;
+}
+.mobileSubmitBtn:hover{filter:brightness(1.04)}
+.mobileSubmitBtn:disabled{opacity:.75;cursor:not-allowed}
+.mobileHint{
+  text-align:center;
+  font-size:12px;
+  margin-top:12px;
+  color:rgba(255,255,255,.86);
+}
+.mobileResult{
+  display:none;
+  margin-top:14px;
+  background:rgba(255,255,255,.97);
+  color:#111827;
+  border-radius:16px;
+  padding:14px;
+  line-height:1.6;
+  box-shadow:0 10px 25px rgba(0,0,0,.12);
+}
+.mobileResult.show{display:block}
+.mobileResult.ok{border-left:5px solid #16a34a}
+.mobileResult.err{border-left:5px solid #dc2626}
+.mobileResult.load{border-left:5px solid #f59e0b}
+.mobileResultTitle{
+  font-weight:800;
+  margin-bottom:5px;
+}
+.mobileLoaderLine{
+  width:100%;
+  height:6px;
+  border-radius:999px;
+  background:#e5e7eb;
+  overflow:hidden;
+  margin-top:10px;
+}
+.mobileLoaderLine span{
+  display:block;
+  height:100%;
+  width:35%;
+  border-radius:999px;
+  background:linear-gradient(90deg,#06b6d4,#2563eb);
+  animation:mobileLoading 1s linear infinite;
+}
+@keyframes mobileLoading{
+  0%{transform:translateX(-120%)}
+  100%{transform:translateX(320%)}
+}
+.mobileCopyBtn{
+  margin-top:12px;
+  border:none;
+  border-radius:10px;
+  padding:10px 12px;
+  background:#0f172a;
+  color:#fff;
+  cursor:pointer;
+  font-weight:700;
+}
+.mobileCopyBtn:hover{opacity:.92}
+.mobileQuota{
+  margin-top:10px;
+  padding:10px 12px;
+  border-radius:12px;
+  background:rgba(255,255,255,.14);
+  font-size:13px;
+  font-weight:800;
+}
+
+ 
+@media print{
+  #userBar{ display:none !important; }
+  #controls button, #controls input, #controls select{ display:none !important; }
+  .mobilePopup{ display:none !important; }
+  table{page-break-inside:auto}
+  tr{page-break-inside:avoid; page-break-after:auto}
+  thead{display:table-header-group}
+  tfoot{display:table-footer-group}
+  .avoid-break{break-inside:avoid; page-break-inside:avoid}
+}
+</style>
+</head>
+
+<body>
+
+<div id="toastWrap"></div>
+
+<div id="loader">
+  <div>
+    <div class="spinner"></div>
+    <div id="loadingTitle" data-i18n="loadingTitle">All India PDS Loading Report ...</div>
+    <div id="progressWrap"><div id="progressBar"></div></div>
+    <div id="progressText">0%</div>
+  </div>
+</div>
+
+
+<div id="loginBox">
+  <h2 data-i18n="loginTitle">Smart PDS Sale Report</h2>
+  <input id="username" placeholder="Username"><br>
+
+  <div style="position:relative">
+    <input id="password" type="password" placeholder="Password" style="padding-right:40px"><br>
+    <span class="eyeBtn" onclick="togglePass('password')">👁</span>
+  </div>
+
+  <button id="loginBtn" onclick="login()" data-i18n="loginBtn">Login</button>
+
+  <div style="margin-top:14px; font-size:13px; color:#475569; font-weight:600; line-height:1.6">
+    यह रिपोर्ट केवल अधिकृत डीलर हेतु है।<br>
+    कृपया अपनी लॉगिन जानकारी किसी से साझा न करें।
+  </div>
+
+  <div style="margin-top:12px">
+    <div style="margin-top:12px">
+      <button style="
+        background:#dc2626;
+        color:white;
+        font-weight:900;
+        border:none;
+        padding:10px 16px;
+        border-radius:10px;
+        cursor:pointer
+      " onclick="openPasswordOptions()">
+      Password Help
+      </button>
+    </div>
+    <span class="small-link" onclick="openSignup()" data-i18n="createNewId">➕ Create New ID</span>
+  </div>
+</div>
+
+
+<div id="passwordBox" class="hidden">
+  <h2>Password Options</h2>
+
+  <button onclick="openChangePassword()">Change Password</button>
+
+  <a href="https://wa.link/ad4e5g" target="_blank" style="text-decoration:none">
+    <button style="background:#16a34a;margin-top:10px">Forget Password (WhatsApp)</button>
+  </a>
+
+  <button onclick="closePasswordBox()" style="margin-top:10px;background:#64748b">Back</button>
+</div>
+
+
+<div id="changePasswordBox" class="hidden">
+  <h2>Change Password</h2>
+
+  <input id="cp_user" placeholder="User ID">
+
+  <div style="position:relative">
+    <input id="cp_old" type="password" placeholder="Old Password" style="padding-right:40px">
+    <span class="eyeBtn" onclick="togglePass('cp_old')">👁</span>
+  </div>
+
+  <div style="position:relative">
+    <input id="cp_new" type="password" placeholder="New Password" style="padding-right:40px">
+    <span class="eyeBtn" onclick="togglePass('cp_new')">👁</span>
+  </div>
+
+  <button onclick="changePassword()">Update Password</button>
+  <button onclick="closeChangePassword()" style="margin-top:10px;background:#64748b">Back</button>
+</div>
+
+
+<div id="signupBox" class="hidden">
+
+  <h2 data-i18n="signupTitle">Create New ID</h2>
+
+  <input id="signupFpsId" placeholder="FPS / Shop ID (username)"><br>
+  <button id="fetchNomBtn" onclick="fetchNomineeMobile()">Verify Details</button>
+
+  <div id="nomHint" style="display:none;margin-top:10px;font-size:13px;font-weight:900;color:#0f766e"></div>
+
+  <input id="signupMobile" placeholder="Enter Full Mobile Number" inputmode="numeric" style="display:none"><br>
+
+  <div style="position:relative; display:none" id="newPassWrap">
+    <input id="newPassword" type="password" placeholder="Create Password (min 4 chars)" style="padding-right:40px">
+    <span class="eyeBtn" onclick="togglePass('newPassword')">👁</span>
+  </div>
+
+  <button id="signupBtn" onclick="signup()" data-i18n="signupBtn" style="display:none">Create (1 Free Token)</button>
+
+  <div style="margin-top:12px">
+    <span class="small-link" onclick="closeSignup()" data-i18n="backToLogin">← Back to Login</span>
+  </div>
+  <div style="margin-top:10px;font-size:12px;color:#64748b" data-i18n="signupHint">
+    New ID 1 Free token ke sath create hogi. Token admin add karega.
+  </div>
+</div>
+
+
+<div id="app" class="hidden">
+
+  <div id="userBar">
+    <div class="left">
+      <span class="pill">👤 <span data-i18n="loggedInAs">Logged in as</span>: <span id="loggedUser">-</span></span>
+      <span class="pill"><small data-i18n="mode">Mode</small>: <span id="roleText">USER</span></span>
+
+      <a href="https://payment-ten-rouge.vercel.app/" target="_blank" class="topLinkBtn">
+        Token जोड़ने के लिए यहाँ क्लिक करें 🪙
+      </a>
+    </div>
+    <div class="right">
+      <button id="langToggleBtn" class="langBtn" onclick="toggleLanguage()">EN / हिन्दी</button>
+    </div>
+  </div>
+
+  <div id="controls">
+    <!-- Token info removed -->
+    <input id="fpsId" placeholder="FPS / Shop ID">
+
+    <select id="month">
+      <option value="" data-i18n="month">Month</option>
+      <option value="1">January</option><option value="2">February</option><option value="3">March</option>
+      <option value="4">April</option><option value="5">May</option><option value="6">June</option>
+      <option value="7">July</option><option value="8">August</option><option value="9">September</option>
+      <option value="10">October</option><option value="11">November</option><option value="12">December</option>
+    </select>
+
+    <select id="year">
+      <option value="2026">2026</option>
+      <option value="2027">2027</option>
+    </select>
+
+    <button id="loadBtn" onclick="secureLoad()" data-i18n="loadReport">Load Report</button>
+    <button id="mobileFinderBtn" onclick="openMobilePopup()">📱 RC Mobile Finder</button>
+    <button id="printBtn" onclick="printReport()" data-i18n="printBtn">🖨 Print</button>
+    <button id="pdfBtn" onclick="downloadPDF()" data-i18n="pdfBtn">📄 PDF</button>
+    <button id="logoutBtn" onclick="logout()" data-i18n="logoutBtn">Logout</button>
+  </div>
+
+  <div id="reportArea">
+
+    <div class="top-info">
+      <span>Whatsapp:- 7500157828</span>
+      <span class="center-text">ALL INDIA PDS</span>
+      <span>Web:- mispds.blogspot.com</span>
+    </div>
+
+    <div id="mainHeader" class="main-title"></div>
+
+    <div class="stats-grid">
+      <div class="stat-card blue"><span data-i18n="totalCards">Total Cards Txns</span><h3 id="totalTxns">0</h3></div>
+      <div class="stat-card green"><span data-i18n="phhCards">PHH Cards Txns</span><h3 id="phhTxns">0</h3></div>
+      <div class="stat-card orange"><span data-i18n="aayCards">AAY Cards Txns</span><h3 id="aayTxns">0</h3></div>
+      <div class="stat-card purple"><span data-i18n="phhUnitsSale">PHH Units Sale</span><h3 id="phhUnits">0</h3></div>
+      <div class="stat-card olive"><span data-i18n="totalQty">Total Qty (Kg)</span><h3 id="totalQty">0</h3></div>
+      <div class="stat-card red"><span data-i18n="commission">Commission ₹</span><h3 id="commission">0</h3></div>
+    </div>
+
+    <div id="highlightWrap" style="display:none;margin-top:10px" class="avoid-break">
+      <div id="redCountBox" class="count-box count-red" style="display:none">
+        <span class="count-dot"></span>
+        <b data-i18n="redText">मात्रा त्रुटि वाले कार्ड</b>
+        <span class="num">: <span id="redCount">0</span></span>
+      </div>
+
+      <div id="greenCountBox" class="count-box count-green" style="display:none">
+        <span class="count-dot"></span>
+        <b data-i18n="greenText">दोबारा वितरण वाले कार्ड</b>
+        <span class="num">: <span id="greenCount">0</span></span>
+      </div>
+    </div>
+
+    <table id="summaryTable" style="display:none"><thead></thead><tbody></tbody><tfoot></tfoot></table>
+
+    <h3 style="text-align:center;margin-top:18px" data-i18n="txnDetailTitle">
+      Transaction Detail (At Own Shop)
+    </h3>
+
+    <table id="detailTable" style="display:none"><thead></thead><tbody></tbody></table>
+
+  </div>
+</div>
+
+
+<div class="mobilePopup" id="mobilePopup">
+  <div class="mobilePopupCard" onclick="event.stopPropagation()">
+    <div class="mobileHead">
+      <div class="mobileHeadTitle">
+        <div class="mobileIconBox">📱</div>
+        <span>RC Mobile Finder</span>
+      </div>
+      <button class="mobileCloseBtn" type="button" onclick="closeMobilePopup()">×</button>
+    </div>
+
+    <div class="mobileGrid">
+      <div>
+        <label for="mobileMonth">Month</label>
+        <select id="mobileMonth"></select>
+      </div>
+      <div>
+        <label for="mobileYear">Year</label>
+        <select id="mobileYear">
+          <option value="2024">2024</option>
+          <option value="2025">2025</option>
+          <option value="2026">2026</option>
+          <option value="2027">2027</option>
+          <option value="2028">2028</option>
+        </select>
+      </div>
+    </div>
+
+    <div style="margin-bottom:14px">
+      <label for="mobileRc">RC Number</label>
+      <input type="text" id="mobileRc" placeholder="RC number enter karein" inputmode="numeric" autocomplete="off">
+    </div>
+
+    <button class="mobileSubmitBtn" id="mobileFetchBtn" type="button" onclick="secureFetchMobileNumber()">
+      Get Mobile Number
+    </button>
+
+    <!-- Mobile quota info removed -->
+
+    <div class="mobileResult" id="mobileResult"></div>
+
+    <div class="mobileHint">Failed lookup par token use nahi hoga</div>
+  </div>
+</div>
+
+<script>
+const $ = (id)=>document.getElementById(id);
+
+const toastWrap = $("toastWrap");
+const loader = $("loader");
+const progressBar = $("progressBar");
+const progressText = $("progressText");
+
+const loginBox = $("loginBox");
+const signupBox = $("signupBox");
+const passwordBox = $("passwordBox");
+const changePasswordBox = $("changePasswordBox");
+const app = $("app");
+
+const signupFpsId = $("signupFpsId");
+const fetchNomBtn = $("fetchNomBtn");
+const nomHint = $("nomHint");
+const signupMobile = $("signupMobile");
+const newPassword = $("newPassword");
+const signupBtn = $("signupBtn");
+const newPassWrap = $("newPassWrap");
+
+const username = $("username");
+const password = $("password");
+
+// Token variables removed
+const loggedUser = $("loggedUser");
+const roleText = $("roleText");
+
+const fpsId = $("fpsId");
+const month = $("month");
+const year = $("year");
+const mainHeader = $("mainHeader");
+const reportArea = $("reportArea");
+
+const summaryTable = $("summaryTable");
+const detailTable = $("detailTable");
+const highlightWrap = $("highlightWrap");
+const redCountBox = $("redCountBox");
+const greenCountBox = $("greenCountBox");
+const redCount = $("redCount");
+const greenCount = $("greenCount");
+
+const totalTxns = $("totalTxns");
+const phhTxns = $("phhTxns");
+const aayTxns = $("aayTxns");
+const totalQty = $("totalQty");
+const phhUnits = $("phhUnits");
+const commission = $("commission");
+
+ 
+const mobilePopup = $("mobilePopup");
+const mobileMonth = $("mobileMonth");
+const mobileYear = $("mobileYear");
+const mobileRc = $("mobileRc");
+const mobileFetchBtn = $("mobileFetchBtn");
+const mobileResult = $("mobileResult");
+// mobileQuotaInfo removed
+
+ 
+function toast(type, title, msg, ms){
+  ms = ms || 2600;
+  const el = document.createElement("div");
+  el.className = "toast " + (type || "ok");
+  el.innerHTML = `
+    <div class="icon">${type==="bad"?"!":type==="warn"?"!":"✓"}</div>
+    <div class="txt">
+      <div class="title">${escapeHtml(title||"")}</div>
+      <div class="msg">${escapeHtml(msg||"")}</div>
+    </div>
+    <button class="x" aria-label="close">×</button>
+  `;
+  el.querySelector(".x").onclick = ()=>el.remove();
+  toastWrap.appendChild(el);
+  setTimeout(()=>{ if(el && el.parentNode) el.remove(); }, ms);
+}
+function escapeHtml(s){
+  return String(s).replace(/[&<>"']/g, m=>({ "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;" }[m]));
+}
+function escapeForOnclick(s){
+  return String(s || "").replace(/\\/g,"\\\\").replace(/'/g,"\\'");
+}
+
+/* ================= Progress ================= */
+function setBtnBusy(btn, busy=true){
+  if(!btn) return;
+  btn.disabled = !!busy;
+  btn.classList.toggle("is-busy", !!busy);
+}
+function setProgress(pct){
+  const p=Math.max(0,Math.min(100,Math.round(pct)));
+  progressBar.style.width=p+"%";
+  progressText.innerText=p+"%";
+}
+function showLoader(){ setProgress(0); loader.style.display="flex"; }
+function hideLoader(){ loader.style.display="none"; }
+
+let fakeTimer=null, fakeP=0;
+function startFakeProgress(){
+  stopFakeProgress();
+  fakeP=0; setProgress(0);
+  fakeTimer=setInterval(()=>{
+    fakeP = Math.min(92, fakeP + (Math.random()*6 + 2));
+    setProgress(fakeP);
+  }, 250);
+}
+function stopFakeProgress(){
+  if(fakeTimer){ clearInterval(fakeTimer); fakeTimer=null; }
+}
+
+/* defaults */
+window.addEventListener("DOMContentLoaded",function(){
+  const now=new Date();
+  month.value=now.getMonth()+1;
+  year.value=String(now.getFullYear());
+
+  mobileMonth.innerHTML = "";
+  for(let i=1;i<=12;i++){
+    mobileMonth.innerHTML += `<option value="${i}">${i}</option>`;
+  }
+  setMobileAutoMonthYear();
+
+  applyLanguage();
+});
+
+/* ================= State ================= */
+const COMM_RATE=0.90;
+let currentUser=null,currentRole=null,sessionToken=null;
+
+let lastReportData=null;
+let lastCommodities=null;
+
+/* mobile finder state - token related removed */
+
+/* ✅ GAS bridge */
+function gasPost(payload){
+  payload = Object.assign({
+    host: location.hostname,
+    ua: navigator.userAgent || ""
+  }, payload);
+
+  return new Promise((resolve, reject)=>{
+    google.script.run
+      .withSuccessHandler(resolve)
+      .withFailureHandler(err=>{
+        const msg = (err && err.message) ? err.message : String(err);
+        reject(new Error(msg));
+      })
+      .api(payload);
+  });
+}
+
+/* ================= Password: show/hide + help ================= */
+function togglePass(id){
+  const el = document.getElementById(id);
+  if(!el) return;
+  el.type = (el.type === "password") ? "text" : "password";
+}
+
+function openPasswordOptions(){
+  loginBox.classList.add("hidden");
+  signupBox.classList.add("hidden");
+  app.classList.add("hidden");
+  changePasswordBox.classList.add("hidden");
+  passwordBox.classList.remove("hidden");
+}
+function closePasswordBox(){
+  passwordBox.classList.add("hidden");
+  loginBox.classList.remove("hidden");
+}
+function openChangePassword(){
+  passwordBox.classList.add("hidden");
+  changePasswordBox.classList.remove("hidden");
+}
+function closeChangePassword(){
+  changePasswordBox.classList.add("hidden");
+  passwordBox.classList.remove("hidden");
+}
+
+async function changePassword(){
+  const u = (document.getElementById("cp_user").value || "").trim();
+  const oldp = (document.getElementById("cp_old").value || "").trim();
+  const newp = (document.getElementById("cp_new").value || "").trim();
+
+  if(!u || !oldp || !newp){
+    toast("warn","Password","All fields required");
+    return;
+  }
+  if(newp.length < 4){
+    toast("warn","Password","New password min 4 chars");
+    return;
+  }
+  if(newp.charAt(0) === "0"){
+    toast("warn","Password","Password का पहला digit 0 नहीं हो सकता");
+    return;
+  }
+
+  showLoader(); startFakeProgress();
+  try{
+    const r = await gasPost({
+      action:"change_password",
+      username:u,
+      old_password:oldp,
+      new_password:newp
+    });
+    stopFakeProgress(); setProgress(100);
+
+    if(r && r.status==="success"){
+      toast("ok","Password", r.message || "Password changed");
+      closeChangePassword();
+      closePasswordBox();
+    }else{
+      toast("bad","Password", (r && r.message) ? r.message : "Change failed");
+    }
+  }catch(e){
+    toast("bad","Password", e.message || "Change failed");
+  }finally{
+    stopFakeProgress(); hideLoader();
+  }
+}
+
+/* ================= Signup UI ================= */
+function openSignup(){
+  loginBox.classList.add("hidden");
+  passwordBox.classList.add("hidden");
+  changePasswordBox.classList.add("hidden");
+  signupBox.classList.remove("hidden");
+
+  signupFpsId.value="";
+  signupMobile.value="";
+  newPassword.value="";
+
+  nomHint.style.display="none";
+  signupMobile.style.display="none";
+  newPassWrap.style.display="none";
+  signupBtn.style.display="none";
+}
+function closeSignup(){
+  signupBox.classList.add("hidden");
+  loginBox.classList.remove("hidden");
+}
+
+/* numeric-only + 10 digit limit */
+signupMobile.addEventListener("input", ()=>{
+  signupMobile.value = signupMobile.value.replace(/\D+/g,"").slice(0,10);
+});
+
+/* Step-1: fetch nominee last4 */
+async function fetchNomineeMobile(){
+  setBtnBusy(fetchNomBtn,true);
+
+  const fps = (signupFpsId.value||"").trim();
+  if(!fps){
+    toast("warn","Signup","FPS/Shop ID डालें");
+    setBtnBusy(fetchNomBtn,false);
+    return;
+  }
+
+  const pass = (newPassword.value||"").trim();
+  if(false && pass.charAt(0)==="0"){
+    toast("warn","Signup","Password का पहला digit 0 नहीं हो सकता");
+    setBtnBusy(signupBtn,false);
+    return;
+  }
+
+  showLoader(); startFakeProgress();
+  try{
+    const r = await gasPost({action:"signup_init", fps_id: fps});
+    stopFakeProgress(); setProgress(100);
+
+    if(r && r.status==="success"){
+      nomHint.style.display="block";
+      nomHint.innerText = "Mobile Last 4 Digit : " + (r.mob_last4 || "----");
+
+      signupMobile.style.display="block";
+      newPassWrap.style.display="block";
+      signupBtn.style.display="block";
+
+      toast("ok","Signup","अब पूरा मोबाइल नंबर डालकर पासवर्ड बनाएं");
+      signupMobile.focus();
+    }else{
+      toast("bad","Signup", (r && r.message) ? r.message : "Fetch failed");
+    }
+  }catch(e){
+    toast("bad","Signup", e.message || "Fetch failed");
+  }finally{
+    stopFakeProgress();
+    hideLoader();
+    setBtnBusy(fetchNomBtn,false);
+  }
+}
+
+/* Step-2: create id only if mobile match */
+async function signup(){
+  setBtnBusy(signupBtn,true);
+
+  const fps = (signupFpsId.value||"").trim();
+  const mob = (signupMobile.value||"").trim();
+  const pass = (newPassword.value||"").trim();
+
+  if(!fps){ toast("warn","Signup","FPS/Shop ID डालें"); setBtnBusy(signupBtn,false); return; }
+  if(mob.length !== 10){ toast("warn","Signup","10 digit mobile number डालें"); setBtnBusy(signupBtn,false); return; }
+  if(pass.length < 4){ toast("warn","Signup","Password min 4 chars"); setBtnBusy(signupBtn,false); return; }
+
+  if(pass.charAt(0)==="0"){
+    toast("warn","Signup","Password का पहला digit 0 नहीं हो सकता");
+    setBtnBusy(signupBtn,false);
+    return;
+  }
+
+  showLoader(); startFakeProgress();
+  try{
+    const r = await gasPost({action:"signup", fps_id: fps, mobile: mob, password: pass});
+    stopFakeProgress(); setProgress(100);
+
+    if(r && r.status==="success"){
+      toast("ok","Signup","ID Created ✅ अब Login करें। Username = " + fps);
+      closeSignup();
+    }else{
+      toast("bad","Signup", (r && r.message) ? r.message : "Signup failed");
+    }
+  }catch(e){
+    toast("bad","Signup", e.message || "Signup failed");
+  }finally{
+    stopFakeProgress();
+    hideLoader();
+    setBtnBusy(signupBtn,false);
+  }
+}
+
+/* ================= Login + Session Watch ================= */
+let sessionWatchTimer = null;
+
+function activeStopAll(){
+  if(sessionWatchTimer){ clearInterval(sessionWatchTimer); sessionWatchTimer=null; }
+}
+
+function startSessionWatch(){
+  if(sessionWatchTimer) clearInterval(sessionWatchTimer);
+  sessionWatchTimer = setInterval(async ()=>{
+    if(!currentUser || !sessionToken) return;
+    try{
+      const r = await gasPost({action:"ping", username: currentUser, session: sessionToken});
+      if(!r || r.status !== "ok"){
+        forceLogoutByKick((r && r.message) ? r.message : "यह आईडी किसी अन्य स्थान पर लॉग इन की गई है।");
+      }
+    }catch(e){}
+  }, 2000);
+}
+
+function forceLogoutByKick(msg){
+  activeStopAll();
+  currentUser=null; currentRole=null; sessionToken=null;
+  lastReportData=null; lastCommodities=null;
+
+  app.classList.add("hidden");
+  signupBox.classList.add("hidden");
+  passwordBox.classList.add("hidden");
+  changePasswordBox.classList.add("hidden");
+  mobilePopup.classList.remove("show");
+  loginBox.classList.remove("hidden");
+  toast("warn","Session", msg || "Logged out");
+}
+
+/* i18n */
+let currentLang = "en";
+const I18N = {
+  en: {
+    loginTitle:"Smart PDS Sale Report Uttar Pradesh",
+    loginBtn:"Login",
+    createNewId:"➕ Create New ID",
+    signupTitle:"Create New ID",
+    signupBtn:"Create (1 Free Token)",
+    backToLogin:"← Back to Login",
+    signupHint:"New ID will be created with 1 Free token. Admin will add tokens.",
+    loadingTitle:"All India PDS Loading Report ...",
+    loggedInAs:"Logged in as",
+    mode:"Mode",
+    month:"Month",
+    loadReport:"Load Report",
+    printBtn:"🖨 Print",
+    pdfBtn:"📄 PDF",
+    logoutBtn:"Logout",
+    totalCards:"Total Cards Txns",
+    phhCards:"PHH Cards Txns",
+    aayCards:"AAY Cards Txns",
+    phhUnitsSale:"PHH Units Sale",
+    totalQty:"Total Qty (Kg)",
+    commission:"Commission ₹",
+    redText:"मात्रा त्रुटि वाले कार्ड",
+    greenText:"दोबारा वितरण वाले कार्ड",
+    txnDetailTitle:"Transaction Detail (At Own Shop)"
+  },
+  hi: {
+    loginTitle:"FPS सुरक्षित लॉगिन",
+    loginBtn:"लॉगिन",
+    createNewId:"➕ नई ID बनाएं",
+    signupTitle:"नई ID बनाएं",
+    signupBtn:"नई ID बनाएं (1 टोकन)",
+    backToLogin:"← लॉगिन पर वापस",
+    signupHint:"नई ID 0 टोकन के साथ बनेगी। टोकन एडमिन जोड़ेंगे।",
+    loadingTitle:"ऑल इंडिया PDS रिपोर्ट लोड हो रही है ...",
+    loggedInAs:"यूज़र",
+    mode:"मोड",
+    month:"महीना",
+    loadReport:"रिपोर्ट लोड करें",
+    printBtn:"🖨 प्रिंट",
+    pdfBtn:"📄 PDF",
+    logoutBtn:"लॉगआउट",
+    totalCards:"कुल कार्ड ट्रांजैक्शन",
+    phhCards:"PHH कार्ड ट्रांजैक्शन",
+    aayCards:"AAY कार्ड ट्रांजैक्शन",
+    phhUnitsSale:"PHH यूनिट बिक्री",
+    totalQty:"कुल मात्रा (किलो)",
+    commission:"कमीशन ₹",
+    redText:"मात्रा त्रुटि वाले कार्ड",
+    greenText:"दोबारा वितरण वाले कार्ड",
+    txnDetailTitle:"ट्रांजैक्शन विवरण (अपनी दुकान पर)"
+  }
+};
+
+function applyLanguage(){
+  const dict = I18N[currentLang] || I18N.en;
+  document.querySelectorAll("[data-i18n]").forEach(el=>{
+    const k = el.getAttribute("data-i18n");
+    if(dict[k]) el.textContent = dict[k];
+  });
+  roleText.textContent = (currentRole || "user").toUpperCase();
+}
+function toggleLanguage(){
+  currentLang = (currentLang === "en") ? "hi" : "en";
+  applyLanguage();
+  if (lastReportData && lastCommodities) buildTables(lastReportData, lastCommodities);
+}
+
+/* login */
+async function login(){
+  const btn=$("loginBtn");
+  setBtnBusy(btn,true);
+
+  const u=username.value.trim();
+  const p=password.value.trim();
+  if(!u||!p){
+    toast("warn","Login","Enter login details");
+    setBtnBusy(btn,false);
+    return;
+  }
+
+  showLoader(); startFakeProgress();
+  try{
+    const data = await gasPost({action:"login", username:u, password:p});
+    stopFakeProgress(); setProgress(100);
+
+    if(data.status==="success"){
+      currentUser=u;
+      currentRole=data.role;
+      sessionToken=data.session || null;
+
+      // Token related assignments removed
+
+      loginBox.classList.add("hidden");
+      signupBox.classList.add("hidden");
+      passwordBox.classList.add("hidden");
+      changePasswordBox.classList.add("hidden");
+      app.classList.remove("hidden");
+
+      applyLanguage();
+
+      toast("ok","Login","Welcome " + u);
+
+      startSessionWatch();
+
+    }else{
+      toast("bad","Login","Invalid login");
+    }
+  }catch(e){
+    toast("bad","Login", e.message || "Login failed");
+  }finally{
+    stopFakeProgress(); hideLoader(); setBtnBusy(btn,false);
+  }
+}
+
+/* logout */
+function logout(){
+  activeStopAll();
+  currentUser=null; currentRole=null; sessionToken=null;
+
+  username.value=""; password.value="";
+  lastReportData=null; lastCommodities=null;
+
+  app.classList.add("hidden");
+  mobilePopup.classList.remove("show");
+  loginBox.classList.remove("hidden");
+
+  toast("ok","Logout","Logged out");
+}
+
+/* ================= REPORT CODE ================= */
+let isLoadingReport = false;
+
+/* 30 Days Report Cache */
+const REPORT_CACHE_TTL_MS = 30 * 24 * 60 * 60 * 1000;
+
+function getCacheKey(fps, m, y){
+  const u = (currentUser || "guest").toLowerCase();
+  return `pds_cache:${u}:${String(fps).trim()}:${String(m).trim()}:${String(y).trim()}`;
+}
+function readReportCache(fps, m, y){
+  try{
+    const key = getCacheKey(fps,m,y);
+    const raw = localStorage.getItem(key);
+    if(!raw) return null;
+    const obj = JSON.parse(raw);
+    if(!obj || !obj.savedAt || !obj.data) return null;
+
+    const age = Date.now() - Number(obj.savedAt);
+    if(age > REPORT_CACHE_TTL_MS){
+      localStorage.removeItem(key);
+      return null;
+    }
+    return obj;
+  }catch(e){
+    return null;
+  }
+}
+function writeReportCache(fps, m, y, data, commodities){
+  try{
+    const key = getCacheKey(fps,m,y);
+    localStorage.setItem(key, JSON.stringify({
+      savedAt: Date.now(),
+      data: data,
+      commodities: commodities
+    }));
+  }catch(e){}
+}
+
+document.addEventListener("visibilitychange", ()=>{ if(!document.hidden) /* refresh removed */; });
+
+const fmt=d=>{
+  const x=new Date(d);
+  return isNaN(x)?d:(x.getDate()+" "+x.toLocaleString('en',{month:'short'})+" "+x.getFullYear());
+};
+
+function detectCommodities(data){
+  const set=new Set();
+  data.forEach(t=>{
+    (t.commodityList||[]).forEach(c=>{
+      if(c.comm_name_en) set.add(String(c.comm_name_en).trim().toUpperCase());
+    });
+  });
+  return Array.from(set);
+}
+
+async function loadReportFromGAS(){
+  const fps=fpsId.value.trim(), m=month.value, y=year.value;
+
+  showLoader(); startFakeProgress();
+  try{
+    const resp = await gasPost({action:"report", fps, month:m, year:y, username: currentUser, session: sessionToken});
+    stopFakeProgress();
+
+    if(resp && (resp.status==="kick" || resp.status==="invalid_session")){
+      hideLoader();
+      forceLogoutByKick(resp.message || "यह आईडी किसी अन्य स्थान पर लॉग इन की गई है।");
+      return false;
+    }
+
+    if(resp.status!=="success" || !Array.isArray(resp.data) || resp.data.length===0){
+      hideLoader();
+      toast("bad","Report", resp.message || "Report not found / empty / blocked.");
+      return false;
+    }
+
+    setProgress(100);
+    const data = resp.data;
+
+    mainHeader.innerHTML=
+      `FPS ID : ${fps} | Sale Month : ${month.options[month.selectedIndex].text} ${y} |
+      <span class="upload-time">
+      Generated : ${new Date().toLocaleString('en-GB',{hour12:true})}
+      </span>`;
+
+    const commodities=detectCommodities(data);
+    lastReportData = data;
+    lastCommodities = commodities;
+
+    buildTables(data,commodities);
+
+    hideLoader();
+    return true;
+
+  }catch(e){
+    stopFakeProgress(); hideLoader();
+    toast("bad","Report","Report load failed. Please try again.");
+    return false;
+  }
+}
+
+async function secureLoad(){
+  const btn = $("loadBtn");
+  if(isLoadingReport) return;
+  isLoadingReport = true;
+  setBtnBusy(btn,true);
+
+  try{
+
+    const fps = fpsId.value.trim();
+    const m   = month.value;
+    const y   = year.value;
+
+    if(!fps || !m){
+      toast("warn","Report","Enter FPS ID and Month");
+      return;
+    }
+
+    // Token refresh removed
+
+    const cached = readReportCache(fps, m, y);
+
+    if(cached && cached.data && Array.isArray(cached.data) && cached.data.length){
+
+      const commodities = cached.commodities || detectCommodities(cached.data);
+
+      mainHeader.innerHTML =
+        `FPS ID : ${fps} | Sale Month : ${month.options[month.selectedIndex].text} ${y} |
+        <span class="upload-time">
+        Generated : ${new Date(cached.savedAt).toLocaleString('en-GB',{hour12:true})} (Cached)
+        </span>`;
+
+      lastReportData = cached.data;
+      lastCommodities = commodities;
+
+      buildTables(cached.data, commodities);
+
+      try{
+        await gasPost({
+          action:"report_touch",
+          fps,
+          month:m,
+          year:y,
+          session: sessionToken
+        });
+      }catch(e){}
+
+      toast("ok","Report","30 दिन के अंदर है ✅ Token नहीं कटेगा");
+
+      return;
+    }
+
+    showLoader();
+    startFakeProgress();
+
+    const resp = await gasPost({
+      action:"report",
+      fps,
+      month:m,
+      year:y,
+      session: sessionToken
+    });
+
+    stopFakeProgress();
+
+    if(resp && (resp.status==="kick" || resp.status==="invalid_session")){
+      hideLoader();
+      forceLogoutByKick(resp.message || "यह आईडी किसी अन्य स्थान पर लॉग इन की गई है।");
+      return;
+    }
+
+    // Token check removed
+
+    if(resp.status!=="success" || !Array.isArray(resp.data) || resp.data.length===0){
+      hideLoader();
+      toast("bad","Report", resp.message || "Report not found / empty.");
+      return;
+    }
+
+    setProgress(100);
+
+    const data = resp.data;
+
+    mainHeader.innerHTML =
+      `FPS ID : ${fps} | Sale Month : ${month.options[month.selectedIndex].text} ${y} |
+      <span class="upload-time">
+      Generated : ${new Date().toLocaleString('en-GB',{hour12:true})}
+      </span>`;
+
+    const commodities = detectCommodities(data);
+
+    lastReportData = data;
+    lastCommodities = commodities;
+
+    buildTables(data, commodities);
+
+    writeReportCache(fps, m, y, lastReportData, lastCommodities);
+
+    // Token updates removed
+
+    hideLoader();
+
+    toast("ok","Report","Report Loaded");
+
+  }
+  catch(err){
+    stopFakeProgress();
+    hideLoader();
+    toast("bad","Report","Load failed. Please try again.");
+  }
+  finally{
+    stopFakeProgress();
+    hideLoader();
+    setBtnBusy(btn,false);
+    isLoadingReport = false;
+  }
+}
+
+/* Filename helper */
+function getReportFileName(ext){
+  const fps = (fpsId.value || "").trim() || "FPS";
+  const mText = month.options[month.selectedIndex] ? month.options[month.selectedIndex].text : "Month";
+  const y = (year.value || "").trim() || "";
+  const base = `${fps} RP ${mText} ${y}`.replace(/\s+/g," ").trim();
+  return ext ? `${base}.${ext}` : base;
+}
+
+/* print */
+function printReport(){
+  document.title = getReportFileName("");
+  window.print();
+}
+
+/* PDF export */
+async function downloadPDF(){
+  const btn=$("pdfBtn");
+  setBtnBusy(btn,true);
+
+  if (!fpsId.value.trim() || !month.value){
+    toast("warn","PDF","Pehle report load karein");
+    setBtnBusy(btn,false);
+    return;
+  }
+
+  summaryTable.style.display = "table";
+  detailTable.style.display = "table";
+  highlightWrap.style.display = "block";
+
+  const filename = getReportFileName("pdf");
+  const prevBg = reportArea.style.background;
+  reportArea.style.background = "#fff";
+
+  showLoader();
+  startFakeProgress();
+
+  try{
+    const opt = {
+      margin: [8, 8, 8, 8],
+      filename: filename,
+      pagebreak: { mode: ["css", "legacy"], avoid: ["tr", ".avoid-break"] },
+      image: { type: "jpeg", quality: 0.98 },
+      html2canvas: {
+        scale: 2,
+        useCORS: true,
+        allowTaint: true,
+        backgroundColor: "#ffffff",
+        scrollY: 0,
+        windowWidth: reportArea.scrollWidth
+      },
+      jsPDF: { unit: "pt", format: "a4", orientation: "portrait", compressPDF: true }
+    };
+
+    await html2pdf().set(opt).from(reportArea).save();
+    stopFakeProgress(); setProgress(100);
+    toast("ok","PDF","Downloaded: " + filename);
+
+  }catch(e){
+    toast("warn","PDF","Report bahut bada hai. Print to PDF use karein.");
+    document.title = getReportFileName("");
+    window.print();
+  }finally{
+    reportArea.style.background = prevBg;
+    stopFakeProgress();
+    hideLoader();
+    setBtnBusy(btn,false);
+  }
+}
+
+/* Commodity labels */
+const COMM_LABELS = {
+  WHEAT: { en: "WHEAT", hi: "गेहूं" },
+  BAJRA: { en: "BAJRA", hi: "बाजरा" },
+  JOWAR: { en: "JOWAR", hi: "ज्वार" },
+  FRICE: { en: "FRICE", hi: "फोर्टिफाइड चावल" },
+  RICE:  { en: "RICE",  hi: "चावल" },
+  SUGAR: { en: "SUGAR", hi: "चीनी" },
+  KEROSENE: { en: "KEROSENE", hi: "मिट्टी का तेल" }
+};
+function commLabel(key){
+  const k = String(key || "").trim().toUpperCase();
+  const x = COMM_LABELS[k];
+  if (x) return x[currentLang] || x.en;
+  return k;
+}
+
+function buildTables(data,commodities){
+  let rcCount={},groupQty={},summary={};
+  let red=0, green=new Set();
+  let totalTx=0, phh=0, aay=0, qty=0, phhQty=0;
+
+  const showOrBlank = (v)=> (Number(v)||0) === 0 ? "" : (Number(v)||0);
+
+  data.forEach(t=>{
+    const rc=t.existingRcNumber, sc=String(t.schemeShortName||"").toUpperCase();
+    rcCount[rc]=(rcCount[rc]||0)+1;
+    let sum=0;
+    (t.commodityList||[]).forEach(c=>sum+=Number(c.sale_qty)||0);
+    groupQty[rc+'|'+sc]=(groupQty[rc+'|'+sc]||0)+sum;
+  });
+
+  detailTable.querySelector('thead').innerHTML =
+  `<tr>
+    <th>${currentLang==="hi" ? "क्रम" : "Sl"}</th>
+    <th>${currentLang==="hi" ? "आरसी नंबर" : "RC No"}</th>
+    <th>${currentLang==="hi" ? "योजना" : "Scheme"}</th>
+    <th>${currentLang==="hi" ? "तारीख" : "Date"}</th>
+    ${commodities.map(c=>`<th>${commLabel(c)}</th>`).join("")}
+  </tr>`;
+  detailTable.querySelector('tbody').innerHTML="";
+
+  summaryTable.querySelector('thead').innerHTML =
+  `<tr>
+    <th>${currentLang==="hi" ? "तारीख" : "Date"}</th>
+    <th>${currentLang==="hi" ? "कार्ड (AAY + PHH)" : "Card (AAY + PHH)"}</th>
+    ${commodities.map(c=>`
+      <th>PHH ${commLabel(c)}</th>
+      <th>AAY ${commLabel(c)}</th>`).join("")}
+  </tr>`;
+  summaryTable.querySelector('tbody').innerHTML="";
+  summaryTable.querySelector('tfoot').innerHTML="";
+
+  const rowsRed = [];
+  const rowsGreen = [];
+  const rowsNormal = [];
+
+  data.forEach(t=>{
+    const sc=String(t.schemeShortName||"").toUpperCase();
+    if(!['PHH','AAY'].includes(sc)) return;
+
+    const rc=t.existingRcNumber;
+    const d=fmt(t.loginTime);
+
+    if(!summary[d]){
+      summary[d]={PHH:0,AAY:0};
+      commodities.forEach(c=>{
+        summary[d]['PHH_'+c]=0;
+        summary[d]['AAY_'+c]=0;
+      });
+    }
+    summary[d][sc]++;
+
+    let rowQty=0, rowCom={};
+    commodities.forEach(c=>rowCom[c]=0);
+
+    (t.commodityList||[]).forEach(c=>{
+      const key = String(c.comm_name_en||"").trim().toUpperCase();
+      const q=Number(c.sale_qty)||0;
+      rowCom[key]=q;
+      summary[d][sc+'_'+key]+=q;
+      rowQty+=q;
+    });
+
+    const total=groupQty[rc+'|'+sc];
+    let cls='';
+
+    if(rcCount[rc]>1 && ((sc==='PHH'&&total%5===0)||(sc==='AAY'&&total%35===0))){
+      cls='row-duplicate';
+      green.add(rc);
+    } else if((sc==='PHH'&&rowQty%5!==0)||(sc==='AAY'&&rowQty%35!==0) || Object.values(rowCom).includes(0)){
+      cls='row-missing';
+      red++;
+    }
+
+    const rowObj = { rc, sc, d, cls, rowCom };
+    if(cls==='row-missing') rowsRed.push(rowObj);
+    else if(cls==='row-duplicate') rowsGreen.push(rowObj);
+    else rowsNormal.push(rowObj);
+
+    qty+=rowQty;
+    if(sc==='PHH'){ phh++; phhQty+=rowQty; } else { aay++; }
+    totalTx++;
+  });
+
+  const ordered = rowsRed.concat(rowsGreen, rowsNormal);
+
+  let sl=1;
+  const tbody = detailTable.querySelector('tbody');
+  tbody.innerHTML = ordered.map(r=>`
+    <tr class="${r.cls}">
+      <td>${sl++}</td>
+      <td>${r.rc}</td>
+      <td>${r.sc}</td>
+      <td>${r.d}</td>
+      ${commodities.map(c=>`<td>${(r.rowCom[c] ?? 0)}</td>`).join("")}
+    </tr>
+  `).join("");
+
+  Object.keys(summary).sort((a,b)=>new Date(a)-new Date(b)).forEach(d=>{
+    const s=summary[d];
+    summaryTable.querySelector('tbody').innerHTML +=
+    `<tr>
+      <td>${d}</td>
+      <td>${s.AAY} + ${s.PHH} = ${s.AAY+s.PHH}</td>
+      ${commodities.map(c=>`
+        <td>${showOrBlank(s['PHH_'+c])}</td>
+        <td>${showOrBlank(s['AAY_'+c])}</td>`).join("")}
+    </tr>`;
+  });
+
+  summaryTable.querySelector('tfoot').innerHTML =
+  `<tr>
+    <td>${currentLang==="hi" ? "कुल" : "TOTAL"}</td>
+    <td>${aay} + ${phh} = ${aay+phh}</td>
+    ${commodities.map(c=>{
+      const phhT = Object.values(summary).reduce((a,b)=>a + (b['PHH_'+c]||0),0);
+      const aayT = Object.values(summary).reduce((a,b)=>a + (b['AAY_'+c]||0),0);
+      return `<td>${showOrBlank(phhT)}</td><td>${showOrBlank(aayT)}</td>`;
+    }).join("")}
+  </tr>`;
+
+  summaryTable.style.display='table';
+  detailTable.style.display='table';
+
+  totalTxns.innerText=totalTx;
+  phhTxns.innerText=phh;
+  aayTxns.innerText=aay;
+  totalQty.innerText=qty.toFixed(1);
+  phhUnits.innerText=(phhQty/5).toFixed(2);
+  commission.innerText=(qty*COMM_RATE).toFixed(2);
+
+  highlightWrap.style.display = "block";
+
+  if(red){
+    redCountBox.style.display='flex';
+    redCount.innerText=red;
+  }else{
+    redCountBox.style.display='none';
+    redCount.innerText=0;
+  }
+
+  if(green.size){
+    greenCountBox.style.display='flex';
+    greenCount.innerText=green.size;
+  }else{
+    greenCountBox.style.display='none';
+    greenCount.innerText=0;
+  }
+}
+
+/* ================= MOBILE FINDER ================= */
+function setMobileAutoMonthYear(){
+  const now = new Date();
+
+  let autoMonth = now.getMonth();
+  let autoYear = now.getFullYear();
+
+  if(autoMonth === 0){
+    autoMonth = 12;
+    autoYear = autoYear - 1;
+  }
+
+  mobileMonth.value = String(autoMonth);
+
+  const yearExists = [...mobileYear.options].some(opt => opt.value === String(autoYear));
+  if(yearExists){
+    mobileYear.value = String(autoYear);
+  }
+}
+
+// Mobile quota update function removed
+
+function openMobilePopup(){
+  if(!currentUser || !sessionToken){
+    toast("warn","Mobile Finder","Pehle login karein");
+    return;
+  }
+
+  setMobileAutoMonthYear();
+
+  mobileRc.value = "";
+  mobileResult.className = "mobileResult";
+  mobileResult.innerHTML = "";
+  mobilePopup.classList.add("show");
+
+  setTimeout(()=>mobileRc.focus(), 180);
+}
+
+function closeMobilePopup(){
+  mobilePopup.classList.remove("show");
+}
+
+mobilePopup.addEventListener("click", function(){
+  closeMobilePopup();
+});
+
+function showMobileResult(type, title, message, extraLoader){
+  mobileResult.className = "mobileResult show " + type;
+  mobileResult.innerHTML = `
+    <div class="mobileResultTitle">${title}</div>
+    <div>${message}</div>
+    ${extraLoader ? '<div class="mobileLoaderLine"><span></span></div>' : ''}
+  `;
+}
+
+function getMobileCacheKey(rc, m, y){
+  const u = (currentUser || "guest").toLowerCase();
+  return `pds_mobile_cache:${u}:${String(rc).trim()}:${String(m).trim()}:${String(y).trim()}`;
+}
+
+function readMobileCache(rc, m, y){
+  try{
+    const raw = localStorage.getItem(getMobileCacheKey(rc,m,y));
+    if(!raw) return null;
+    const obj = JSON.parse(raw);
+    if(!obj || !obj.savedAt || !obj.mobile) return null;
+
+    const age = Date.now() - Number(obj.savedAt);
+    if(age > REPORT_CACHE_TTL_MS){
+      localStorage.removeItem(getMobileCacheKey(rc,m,y));
+      return null;
+    }
+    return obj;
+  }catch(e){
+    return null;
+  }
+}
+
+function writeMobileCache(rc, m, y, mobile){
+  try{
+    localStorage.setItem(getMobileCacheKey(rc,m,y), JSON.stringify({
+      savedAt: Date.now(),
+      mobile: mobile
+    }));
+  }catch(e){}
+}
+
+async function copyMobileText(text){
+  try{
+    await navigator.clipboard.writeText(text);
+    toast("ok","Copy","Mobile copied");
+  }catch(e){
+    toast("bad","Copy","Copy failed");
+  }
+}
+
+async function secureFetchMobileNumber(){
+  const rc = (mobileRc.value || "").trim();
+  const m = mobileMonth.value;
+  const y = mobileYear.value;
+
+  if(!rc){
+    showMobileResult("err","⚠ Input Required","Please RC number enter karein.");
+    mobileRc.focus();
+    return;
+  }
+
+  if(!m || !y){
+    showMobileResult("err","⚠ Required","Month aur year select karein.");
+    return;
+  }
+
+  // Token refresh removed
+
+  const cached = readMobileCache(rc, m, y);
+  if(cached && cached.mobile){
+    showMobileResult(
+      "ok",
+      "✅ Mobile Found (Cached)",
+      `RC Number: <b>${escapeHtml(rc)}</b><br>Mobile Number: <b id="foundMobileNo">${escapeHtml(cached.mobile)}</b><br>
+      <button class="mobileCopyBtn" type="button" onclick="copyMobileText('${escapeForOnclick(cached.mobile)}')">Copy Mobile</button>`
+    );
+    toast("ok","Mobile Finder","30 दिन के अंदर है ✅ Token नहीं कटेगा");
+    return;
+  }
+
+  setBtnBusy(mobileFetchBtn,true);
+  showMobileResult("load","Fetching...",`राशन कार्ड <b>${escapeHtml(rc)}</b>  के लिए मोबाइल नंबर निकला जा रहा है .`, true);
+
+  try{
+    const resp = await gasPost({
+      action:"mobile_lookup",
+      rc: rc,
+      month: m,
+      year: y,
+      username: currentUser,
+      session: sessionToken
+    });
+
+    if(resp && (resp.status==="kick" || resp.status==="invalid_session")){
+      forceLogoutByKick(resp.message || "यह आईडी किसी अन्य स्थान पर लॉग इन की गई है।");
+      return;
+    }
+
+    // Token check removed
+
+    if(resp.status !== "success"){
+      showMobileResult("err","❌ Not Found", escapeHtml(resp.message || "Mobile number nahi mila."));
+      return;
+    }
+
+    const mobile = resp.mobile || "";
+    if(!mobile){
+      showMobileResult("err","❌ Not Found","Mobile number nahi mila.");
+      return;
+    }
+
+    writeMobileCache(rc, m, y, mobile);
+
+    showMobileResult(
+      "ok",
+      "✅ Mobile Found",
+      `RC Number: <b>${escapeHtml(rc)}</b><br>
+       Mobile Number: <b id="foundMobileNo">${escapeHtml(mobile)}</b><br>
+       <button class="mobileCopyBtn" type="button" onclick="copyMobileText('${escapeForOnclick(mobile)}')">Copy Mobile</button>`
+    );
+
+    toast("ok","Mobile Finder","Mobile number fetched");
+
+  }catch(e){
+    showMobileResult("err","⚠ Server Error","Data fetch karne me problem aayi.");
+  }finally{
+    setBtnBusy(mobileFetchBtn,false);
+  }
+}
+
+mobileRc.addEventListener("keydown", function(e){
+  if(e.key === "Enter"){
+    secureFetchMobileNumber();
+  }
+});
+</script>
+
+</body>
+</html>
