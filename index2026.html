@@ -1550,7 +1550,785 @@ Gallery</a></li>
 </head>
 <body>
 
-<!-- Navigation -->
+<!-- 2026 -->
+
+
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>युवा कमेटी बरेली | लंगर खिदमत</title>
+    <!-- Font Awesome 6 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        /* ---------- GLOBAL RESET (no conflict) ---------- */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            background: #fffaf3;
+            color: #2c2b28;
+            scroll-behavior: smooth;
+            font-family: 'Segoe UI', 'Poppins', system-ui, sans-serif;
+        }
+
+        /* ========== OLD HEADER (unchanged) ========== */
+        .old-header {
+            background: #1f3b2c;
+            padding: 1rem 2rem;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+        .old-nav-container {
+            max-width: 1300px;
+            margin: auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        .old-logo {
+            color: #ffefcf;
+            font-size: 1.6rem;
+            font-weight: bold;
+        }
+        .old-logo i {
+            margin-right: 8px;
+            color: #f7b05e;
+        }
+        .old-nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+        .old-nav-links a {
+            color: #fef5e7;
+            text-decoration: none;
+            font-weight: 500;
+            transition: 0.2s;
+            font-size: 1rem;
+        }
+        .old-nav-links a:hover {
+            color: #ffcf8a;
+            border-bottom: 2px solid #ffcf8a;
+            padding-bottom: 4px;
+        }
+        .old-mobile-menu {
+            display: none;
+            font-size: 1.7rem;
+            color: #ffefcf;
+            cursor: pointer;
+        }
+        @media (max-width: 780px) {
+            .old-nav-links {
+                display: none;
+                width: 100%;
+                flex-direction: column;
+                gap: 1rem;
+                margin-top: 1rem;
+                text-align: center;
+                padding-bottom: 0.5rem;
+            }
+            .old-nav-links.active {
+                display: flex;
+            }
+            .old-mobile-menu {
+                display: block;
+            }
+            .old-header {
+                padding: 0.8rem 1.2rem;
+            }
+        }
+
+        /* ========== OLD IMAGE SLIDER (unchanged) ========== */
+        .old-slider-container {
+            width: 100%;
+            overflow: hidden;
+            position: relative;
+            background: #2a2a2a;
+        }
+        .old-slider-wrapper {
+            display: flex;
+            transition: transform 0.5s ease-in-out;
+        }
+        .old-slide {
+            min-width: 100%;
+            height: 450px;
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            text-shadow: 0 2px 8px rgba(0,0,0,0.6);
+            flex-direction: column;
+            text-align: center;
+        }
+        .old-slide h3 {
+            background: rgba(0,0,0,0.5);
+            padding: 0.5rem 1.5rem;
+            border-radius: 40px;
+            font-size: 1.8rem;
+        }
+        .old-slider-btn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(0,0,0,0.5);
+            color: white;
+            border: none;
+            font-size: 2rem;
+            padding: 0.2rem 0.8rem;
+            cursor: pointer;
+            z-index: 10;
+            border-radius: 30px;
+        }
+        .old-prev { left: 15px; }
+        .old-next { right: 15px; }
+        .old-slider-dots {
+            position: absolute;
+            bottom: 15px;
+            left: 0;
+            right: 0;
+            text-align: center;
+        }
+        .old-dot {
+            display: inline-block;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: #bbb;
+            margin: 0 5px;
+            cursor: pointer;
+        }
+        .old-dot.active {
+            background: #b87c4f;
+        }
+        @media (max-width: 700px) {
+            .old-slide { height: 300px; }
+            .old-slide h3 { font-size: 1.2rem; }
+        }
+
+        /* ========== OLD TEAM SECTION (unchanged) ========== */
+        .old-team-section {
+            padding: 3rem 1.5rem;
+            background: #fff5ea;
+            text-align: center;
+        }
+        .old-team-title {
+            font-size: 2rem;
+            margin-bottom: 2rem;
+            color: #1f3b2c;
+            border-bottom: 3px solid #c59264;
+            display: inline-block;
+            padding-bottom: 0.3rem;
+        }
+        .old-team-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            max-width: 1200px;
+            margin: auto;
+        }
+        .old-team-card {
+            background: white;
+            border-radius: 28px;
+            padding: 1.5rem;
+            box-shadow: 0 10px 18px rgba(0,0,0,0.05);
+            transition: 0.2s;
+        }
+        .old-team-card i {
+            font-size: 3.5rem;
+            color: #b87c4f;
+            margin-bottom: 1rem;
+        }
+        .old-team-card h3 {
+            font-size: 1.4rem;
+            margin-bottom: 0.3rem;
+        }
+
+        /* ========== OLD FOOTER (unchanged) ========== */
+        .old-footer {
+            background: #1b3d2a;
+            color: #f0e2ce;
+            text-align: center;
+            padding: 2rem;
+            margin-top: 2rem;
+        }
+
+        /* ========== NEW SITE NAMESPACED CSS (Cream + Green + Gold) ========== */
+        .new-site {
+            /* All new styles are scoped inside .new-site */
+        }
+        /* Hero Section Premium */
+        .new-site .ns-hero {
+            background: linear-gradient(145deg, #fef5e7, #f9e5c8);
+            text-align: center;
+            padding: 3rem 1.5rem;
+            border-radius: 0 0 50px 50px;
+            margin-bottom: 2rem;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.03);
+        }
+        .new-site .ns-alhamdulillah {
+            font-size: 1.6rem;
+            font-weight: bold;
+            color: #2a5f3e;
+            background: #ffffffcc;
+            backdrop-filter: blur(4px);
+            display: inline-block;
+            padding: 0.5rem 2rem;
+            border-radius: 60px;
+            margin-bottom: 1rem;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+        .new-site .ns-hero h2 {
+            font-size: 2.3rem;
+            color: #1f3b2c;
+            margin: 0.5rem 0;
+        }
+        .new-site .ns-hero p {
+            font-size: 1.2rem;
+            color: #5a3e2b;
+        }
+
+        /* Countdown Timer modern */
+        .new-site .ns-timer-section {
+            background: #fff9ef;
+            margin: 2rem 1.5rem;
+            padding: 2rem;
+            border-radius: 48px;
+            box-shadow: 0 20px 35px rgba(100, 70, 40, 0.08);
+            text-align: center;
+            border: 1px solid #f3e5ce;
+        }
+        .new-site .ns-event-name {
+            font-size: 1.5rem;
+            font-weight: bold;
+            background: #2a5f3e20;
+            color: #2a5f3e;
+            display: inline-block;
+            padding: 0.4rem 1.8rem;
+            border-radius: 60px;
+            backdrop-filter: blur(2px);
+        }
+        .new-site .ns-countdown {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            margin: 2rem 0;
+            flex-wrap: wrap;
+        }
+        .new-site .ns-time-box {
+            background: linear-gradient(135deg, #2a5f3e, #1e4630);
+            color: white;
+            padding: 1rem 1.5rem;
+            border-radius: 32px;
+            min-width: 100px;
+            text-align: center;
+            box-shadow: 0 12px 18px rgba(0,0,0,0.1);
+            transition: transform 0.2s;
+        }
+        .new-site .ns-time-box:hover {
+            transform: translateY(-5px);
+        }
+        .new-site .ns-time-box span:first-child {
+            font-size: 2.2rem;
+            font-weight: bold;
+            display: block;
+            letter-spacing: 2px;
+        }
+        .new-site .ns-next-langer {
+            background: #e7d5b5;
+            border-radius: 60px;
+            padding: 0.8rem;
+            font-weight: 600;
+            color: #3a2a1a;
+        }
+
+        /* Stats Cards with hover */
+        .new-site .ns-container {
+            max-width: 1300px;
+            margin: auto;
+            padding: 0 1.5rem;
+        }
+        .new-site .ns-stats {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            flex-wrap: wrap;
+            margin: 2rem 0;
+        }
+        .new-site .ns-stat-card {
+            background: white;
+            border-radius: 32px;
+            padding: 1.8rem 1rem;
+            text-align: center;
+            flex: 1;
+            min-width: 180px;
+            box-shadow: 0 15px 30px rgba(0,0,0,0.05);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            border-bottom: 4px solid #c59264;
+        }
+        .new-site .ns-stat-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 25px 35px rgba(0,0,0,0.1);
+        }
+        .new-site .ns-stat-card i {
+            font-size: 2.5rem;
+            color: #b87c4f;
+            margin-bottom: 0.8rem;
+        }
+        .new-site .ns-click-hint {
+            font-size: 0.7rem;
+            margin-top: 12px;
+            color: #b87c4f;
+            background: #fcf2e3;
+            display: inline-block;
+            padding: 0.2rem 1rem;
+            border-radius: 30px;
+        }
+
+        /* Section Titles + Cards (Professional uniform) */
+        .new-site .ns-section-title {
+            font-size: 2.2rem;
+            text-align: center;
+            margin: 2.5rem 0 1.8rem;
+            color: #2a5f3e;
+            border-bottom: 3px solid #dbb87c;
+            display: inline-block;
+            width: auto;
+            padding-bottom: 0.5rem;
+        }
+        .new-site .ns-grid-2 {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+        .new-site .ns-card {
+            background: #ffffffdd;
+            backdrop-filter: blur(2px);
+            padding: 2rem;
+            border-radius: 40px;
+            box-shadow: 0 12px 28px rgba(0,0,0,0.04);
+            transition: all 0.25s;
+            border: 1px solid #f0e2ce;
+        }
+        .new-site .ns-card:hover {
+            box-shadow: 0 20px 35px rgba(0,0,0,0.08);
+            border-color: #dbb87c;
+        }
+        .new-site .ns-btn {
+            display: inline-block;
+            background: #b87c4f;
+            color: white;
+            padding: 0.7rem 1.8rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            margin-top: 1.2rem;
+            border: none;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        .new-site .ns-btn-outline {
+            background: transparent;
+            border: 2px solid #b87c4f;
+            color: #b87c4f;
+        }
+        .new-site .ns-btn:hover {
+            background: #9b623c;
+            transform: scale(1.02);
+        }
+        .new-site .ns-map-card iframe {
+            width: 100%;
+            height: 300px;
+            border-radius: 28px;
+            border: 0;
+            margin: 1rem 0;
+        }
+        .new-site .ns-contact-form input,
+        .new-site .ns-contact-form textarea {
+            width: 100%;
+            margin: 0.7rem 0;
+            padding: 0.9rem;
+            border-radius: 32px;
+            border: 1px solid #e2cfb0;
+            background: #fffcf7;
+        }
+        .new-site .ns-qr-actual {
+            background: #fef7e9;
+            border-radius: 24px;
+            padding: 1rem;
+            text-align: center;
+            margin: 1.2rem 0;
+            border: 1px solid #e9dccd;
+        }
+        .new-site .ns-qr-actual img {
+            max-width: 150px;
+            border-radius: 20px;
+        }
+
+        /* Modal (still within new-site but works globally) */
+        .new-site .ns-modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.7);
+            backdrop-filter: blur(4px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 2000;
+            visibility: hidden;
+            opacity: 0;
+            transition: 0.2s;
+        }
+        .new-site .ns-modal-overlay.active {
+            visibility: visible;
+            opacity: 1;
+        }
+        .new-site .ns-modal-content {
+            background: #fff8ef;
+            max-width: 500px;
+            width: 90%;
+            padding: 1.8rem;
+            border-radius: 40px;
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+        .new-site .ns-close-modal {
+            background: #b87c4f;
+            border: none;
+            padding: 0.6rem 1.2rem;
+            border-radius: 40px;
+            margin-top: 1rem;
+            width: 100%;
+            color: white;
+            font-weight: bold;
+        }
+        @media (max-width: 600px) {
+            .new-site .ns-hero h2 { font-size: 1.7rem; }
+            .new-site .ns-time-box { min-width: 70px; padding: 0.6rem; }
+            .new-site .ns-section-title { font-size: 1.8rem; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- ==================== OLD HEADER (unchanged) ==================== -->
+<header class="old-header">
+    <div class="old-nav-container">
+        <div class="old-logo"><i class="fas fa-hands-helping"></i> युवा कमेटी बरेली</div>
+        <div class="old-mobile-menu" id="oldMobileMenu"><i class="fas fa-bars"></i></div>
+        <ul class="old-nav-links" id="oldNavLinks">
+            <li><a href="#new-home">होम</a></li>
+            <li><a href="#new-about">हमारा उद्देश्य</a></li>
+            <li><a href="#new-events">लंगर & एवेंट्स</a></li>
+            <li><a href="#new-support">सहयोग / टीम</a></li>
+            <li><a href="#new-contact">संपर्क</a></li>
+            <li><a href="#old-team">हमारी टीम</a></li>
+        </ul>
+    </div>
+</header>
+
+<!-- ==================== OLD IMAGE SLIDER (unchanged) ==================== -->
+<div class="old-slider-container">
+    <div class="old-slider-wrapper" id="oldSliderWrapper">
+        <div class="old-slide" style="background-image: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('https://picsum.photos/id/104/1600/600'); background-size: cover;">
+            <h3>खिदमत-ए-खल्क</h3>
+            <p style="font-size:1rem;">लंगर का इंतजाम</p>
+        </div>
+        <div class="old-slide" style="background-image: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('https://picsum.photos/id/30/1600/600'); background-size: cover;">
+            <h3>नियाज-ओ-लंगर</h3>
+            <p style="font-size:1rem;">सभी के लिए खुला</p>
+        </div>
+        <div class="old-slide" style="background-image: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('https://picsum.photos/id/169/1600/600'); background-size: cover;">
+            <h3>युवा कमेटी बरेली</h3>
+            <p style="font-size:1rem;">सेवा ही हमारा धर्म</p>
+        </div>
+    </div>
+    <button class="old-slider-btn old-prev" id="oldPrev"><i class="fas fa-chevron-left"></i></button>
+    <button class="old-slider-btn old-next" id="oldNext"><i class="fas fa-chevron-right"></i></button>
+    <div class="old-slider-dots" id="oldSliderDots"></div>
+</div>
+
+<!-- ==================== NEW SITE SECTIONS (Premium Cream+Green+Gold) ==================== -->
+<div class="new-site">
+    <!-- Hero Section (New premium) -->
+    <section id="new-home">
+        <div class="ns-hero">
+            <div class="ns-alhamdulillah">✨ Alhamdulillah ✨</div>
+            <h2><i class="fas fa-hands-helping"></i> नियाज़-ओ-लंगर खिदमत</h2>
+            <p>युवा कमेटी बरेली की ओर अवसरों पर लंगर का प्रबंध</p>
+        </div>
+    </section>
+
+    <!-- Countdown Timer (Modern) -->
+    <div class="ns-timer-section">
+        <div class="ns-event-name"><i class="fas fa-calendar-alt"></i> अगला विशेष लंगर – नियाज ए मोहर्रम</div>
+        <h3 style="margin: 1rem 0;">🌙 25 जून 2026 · बाद नमाज़ ए मग़रिब</h3>
+        <div class="ns-countdown" id="nsCountdown">
+            <div class="ns-time-box"><span id="nsDays">00</span><span>दिन</span></div>
+            <div class="ns-time-box"><span id="nsHours">00</span><span>घंटे</span></div>
+            <div class="ns-time-box"><span id="nsMinutes">00</span><span>मिनट</span></div>
+            <div class="ns-time-box"><span id="nsSeconds">00</span><span>सेकंड</span></div>
+        </div>
+        <div class="ns-next-langer">🎵 इंतजार है 25 जून 2026 🎵 | तैयारियाँ जारी 🤲</div>
+    </div>
+
+    <!-- Stats Cards -->
+    <div class="ns-container">
+        <div class="ns-stats">
+            <div class="ns-stat-card" id="nsTotalLangarCard">
+                <i class="fas fa-utensils"></i>
+                <h3 id="nsTotalLangarCount">19</h3>
+                <p>अब तक हुए कुल लंगर</p>
+                <div class="ns-click-hint"><i class="fas fa-mouse-pointer"></i> यहाँ क्लिक करें → तारीखें देखें</div>
+            </div>
+            <div class="ns-stat-card">
+                <i class="fas fa-hands"></i>
+                <h3>25 जून 2026</h3>
+                <p>लंगर तारीख</p>
+            </div>
+            <div class="ns-stat-card">
+                <i class="fas fa-users"></i>
+                <h3>1500+</h3>
+                <p>हर लंगर में शिरकत</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- हमारा उद्देश्य -->
+    <section id="new-about">
+        <div class="ns-container">
+            <div class="ns-section-title">हमारा उद्देश्य</div>
+            <div class="ns-grid-2">
+                <div class="ns-card">
+                    <i class="fas fa-mosque" style="font-size: 2rem; color:#b87c4f;"></i>
+                    <h3 style="margin: 0.8rem 0;">ईमानदार खिदमत</h3>
+                    <p>युवा कमेटी (बरेली) का लक्ष्य अल्लाह की राह में भूखों को खाना खिलाना और मोहब्बत का पैगाम देना है। सभी मज़हब के लोगों के लिए लंगर खुला है। अब तक 19 बार लंगर का आयोजन हो चुका है।</p>
+                </div>
+                <div class="ns-card">
+                    <i class="fas fa-hand-holding-heart" style="font-size: 2rem; color:#b87c4f;"></i>
+                    <h3 style="margin: 0.8rem 0;">फाइनेंस सपोर्ट & टीम वर्क</h3>
+                    <p>आप भी इस नेक काम में शरीक हो सकते हैं। आपकी ख़िदमात हमारी ताक़त हैं। 2026 वर्क टीम के लिए रजिस्ट्रेशन खुला है।</p>
+                    <a href="#new-support" class="ns-btn ns-btn-outline">जुड़िए अब</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- आने वाले लंगर & इस्लामी एवेंट्स -->
+    <section id="new-events">
+        <div class="ns-container">
+            <div class="ns-section-title">आने वाले लंगर & इस्लामी एवेंट्स</div>
+            <div class="ns-grid-2">
+                <div class="ns-card">
+                    <i class="fas fa-clock"></i>
+                    <h4 style="margin: 0.5rem 0;">🗓️ नियाज मोहर्रम 1448H</h4>
+                    <p><strong>तारीख:</strong> 25 जून 2026 (बाद नमाज़ मग़रिब)<br>
+                    <strong>जगह:</strong> मोहल्ला पश्चिम पदारथपुर बरेली शरीफ (मेन रोड)<br>
+                    <i class="fas fa-map-marker-alt"></i> <a href="https://maps.app.goo.gl/aRjGqQw833ip1ncY7" target="_blank" style="color:#b87c4f; font-weight:bold;">📍 गूगल मैप पर देखें</a>
+                    </p>
+                    <p><i class="fas fa-location-dot"></i> पूरा पता: मोहल्ला पश्चिम सरकारी स्कूल के पास पदारथपुर बरेली शरीफ</p>
+                </div>
+                <div class="ns-card">
+                    <i class="fas fa-utensil-spoon"></i>
+                    <h4 style="margin: 0.5rem 0;">🌙 मोहर्रम लंगर 2026</h4>
+                    <p>टीम तैयारी में जुटी। आप सहयोग करें।</p>
+                    <a href="#new-support" class="ns-btn">सहयोग करें</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- फाइनेंस सपोर्ट -->
+    <section id="new-support">
+        <div class="ns-container">
+            <div class="ns-section-title">फाइनेंस सपोर्ट 2026 & युवा टीम</div>
+            <div class="ns-grid-2">
+                <div class="ns-card">
+                    <i class="fas fa-rupee-sign"></i>
+                    <h3>चंदा / नियाज़ में हिस्सा</h3>
+                    <p>आपके पैसे से ही लंगर सजता है। हर रुपया अल्लाह की राह में खर्च होता है।</p>
+                    <div class="ns-qr-actual">
+                        <img src="1000680090.png" alt="PhonePe QR Code">
+                        <p><strong><i class="fab fa-google-pay"></i> PhonePe / UPI:</strong> yuvacommittee@ybl</p>
+                        <small>स्कैन करें और सहयोग करें | मोहसिन खान</small>
+                    </div>
+                    <ul style="margin-left: 1rem;">
+                        <li><i class="fas fa-qrcode"></i> UPI ID: yuvacommittee@ybl</li>
+                        <li><i class="fas fa-university"></i> बैंक अकाउंट: युवा कमेटी बरेली</li>
+                    </ul>
+                    <button class="ns-btn" id="nsDonateInfoBtn"><i class="fas fa-phone-alt"></i> बैंक डिटेल्स के लिए क्लिक करें</button>
+                </div>
+                <div class="ns-card">
+                    <i class="fas fa-users"></i>
+                    <h3>वर्क टीम 2026 & युवा कमेटी</h3>
+                    <p>ज्वाइन करें – लंगर की तैयारी, सर्वे, खाना पकाने और सर्व करने का मौका। आपका समय भी बड़ा सदका है।</p>
+                    <a href="#" id="nsWhatsappJoinBtn" class="ns-btn ns-btn-outline"><i class="fab fa-whatsapp"></i> व्हाट्सऐप पर जुड़ें</a>
+                    <div style="margin-top: 1rem;">
+                        <i class="fas fa-map-pin"></i> <strong>लोकेशन:</strong> <a href="https://maps.app.goo.gl/aRjGqQw833ip1ncY7" target="_blank">गूगल मैप - पदारथपुर बरेली शरीफ</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Form + Map -->
+    <section id="new-contact">
+        <div class="ns-container">
+            <div class="ns-section-title">संपर्क करें और मैसेज भेजें</div>
+            <div class="ns-grid-2">
+                <div class="ns-card ns-map-card">
+                    <h3><i class="fas fa-map-marked-alt"></i> लंगर लोकेशन पदारथपुर बरेली शरीफ</h3>
+                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3550.131212345678!2d79.4049!3d28.3675!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x39a04d0b2b2b2b2b%3A0x8a8a8a8a8a8a8a8a!2sPadarthpur%2C%20Bareilly%2C%20Uttar%20Pradesh!5e0!3m2!1sen!2sin!4v1650000000000!5m2!1sen!2sin" allowfullscreen="" loading="lazy"></iframe>
+                    <p><i class="fas fa-location-dot"></i> मुख्य लंगर स्थल: मोहल्ला पश्चिम सरकारी स्कूल के पास पदारथपुर बरेली शरीफ</p>
+                    <a href="https://maps.app.goo.gl/aRjGqQw833ip1ncY7" target="_blank" class="ns-btn" style="background:#6f4e2e;">गूगल मैप पर खोलें</a>
+                </div>
+                <div class="ns-card">
+                    <h3><i class="fas fa-address-card"></i> सीधे संपर्क करें</h3>
+                    <p><i class="fas fa-phone-alt"></i> <a href="tel:+917983920845">+91 7983920845</a> (Mohsin Khan)</p>
+                    <p><i class="fas fa-phone-alt"></i> <a href="tel:+917830118901">+91 7830118901</a> (Arman Khan)</p>
+                    <p><i class="fas fa-phone-alt"></i> <a href="tel:+919105797135">+91 9105797135</a> (Sohib Khan)</p>
+                    <p><i class="fas fa-phone-alt"></i> <a href="tel:+918445075334">+91 8445075334</a> (Sartaj Khan)</p>
+                    <p><i class="fab fa-whatsapp"></i> <a href="https://wa.me/917830118901?text=सलाम,%20युवा%20कमेटी%20बरेली%20के%20लंगर%20सेवा%20में%20जुड़ना%20चाहता%20हूँ।" target="_blank">+91 7830118901 (WhatsApp)</a></p>
+                    <p><i class="fas fa-envelope"></i> yuvacommittee.bly@gmail.com</p>
+                    <hr>
+                    <h4>जल्दी मैसेज भेजें</h4>
+                    <form id="nsContactForm" class="ns-contact-form">
+                        <input type="text" id="nsName" placeholder="आपका नाम *" required>
+                        <input type="tel" id="nsPhone" placeholder="मोबाइल नंबर">
+                        <textarea rows="3" id="nsMessage" placeholder="आपका सुझाव, दान के लिए या टीम जॉइन करने का संदेश..." required></textarea>
+                        <button type="submit" class="ns-btn">भेजें 📨</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+
+<!-- ==================== OLD TEAM SECTION (unchanged) ==================== -->
+<section id="old-team" class="old-team-section">
+    <h2 class="old-team-title"><i class="fas fa-users"></i> हमारी टीम</h2>
+    <div class="old-team-grid">
+        <div class="old-team-card"><i class="fas fa-user-tie"></i><h3>मोहसिन खान</h3><p>संस्थापक एवं अध्यक्ष</p></div>
+        <div class="old-team-card"><i class="fas fa-user-check"></i><h3>अरमान खान</h3><p>सह-संयोजक</p></div>
+        <div class="old-team-card"><i class="fas fa-user-astronaut"></i><h3>सोहेब खान</h3><p>कार्यक्रम प्रबंधक</p></div>
+        <div class="old-team-card"><i class="fas fa-user-friends"></i><h3>सरताज खान</h3><p>वित्त एवं प्रसारण</p></div>
+    </div>
+</section>
+
+<!-- ==================== OLD FOOTER (unchanged) ==================== -->
+<footer class="old-footer">
+    <p>© 2026 युवा कमेटी (बरेली) | Alhamdulillah for every blessing | खिदमत ए खल्क हमारा नारा</p>
+    <p>🌙 "अब तक कुल 19 लंगर, नियाज ए हवाजा गरीब नवाज 14-फरवरी-2021 से शुरुआत"</p>
+</footer>
+
+<!-- Modal for Langar Dates (namespaced) -->
+<div class="new-site">
+    <div id="nsLangarModal" class="ns-modal-overlay">
+        <div class="ns-modal-content">
+            <h3><i class="fas fa-calendar-week"></i> 19 लंगर की बरकती तारीखें</h3>
+            <div id="nsLangarDatesList"></div>
+            <button class="ns-close-modal" id="nsCloseModalBtn">बंद करें</button>
+        </div>
+    </div>
+</div>
+
+<script>
+    // ========== OLD SLIDER FUNCTIONALITY ==========
+    const sliderWrapper = document.getElementById('oldSliderWrapper');
+    const slides = document.querySelectorAll('.old-slide');
+    const prevBtn = document.getElementById('oldPrev');
+    const nextBtn = document.getElementById('oldNext');
+    const dotsContainer = document.getElementById('oldSliderDots');
+    let currentIndex = 0;
+    let slideInterval;
+    function updateSlider() { sliderWrapper.style.transform = `translateX(-${currentIndex * 100}%)`; document.querySelectorAll('.old-dot').forEach((dot, i) => dot.classList.toggle('active', i === currentIndex)); }
+    function nextSlide() { currentIndex = (currentIndex + 1) % slides.length; updateSlider(); restartInterval(); }
+    function prevSlide() { currentIndex = (currentIndex - 1 + slides.length) % slides.length; updateSlider(); restartInterval(); }
+    function restartInterval() { clearInterval(slideInterval); slideInterval = setInterval(nextSlide, 5000); }
+    function createDots() { slides.forEach((_, i) => { const dot = document.createElement('span'); dot.classList.add('old-dot'); if (i === 0) dot.classList.add('active'); dot.addEventListener('click', () => { currentIndex = i; updateSlider(); restartInterval(); }); dotsContainer.appendChild(dot); }); }
+    if (slides.length) { createDots(); updateSlider(); slideInterval = setInterval(nextSlide, 5000); }
+    if (prevBtn) prevBtn.addEventListener('click', prevSlide);
+    if (nextBtn) nextBtn.addEventListener('click', nextSlide);
+
+    // ========== COUNTDOWN (NEW NAMESPACED ID) ==========
+    function getTargetDate() { return new Date(2026, 5, 25, 18, 45, 0); }
+    function updateCountdown() {
+        const diff = getTargetDate() - new Date();
+        if (diff <= 0) { ['nsDays','nsHours','nsMinutes','nsSeconds'].forEach(id => document.getElementById(id).innerText = "00"); return; }
+        const d = Math.floor(diff/864e5), h = Math.floor((diff%864e5)/36e5), m = Math.floor((diff%36e5)/6e4), s = Math.floor((diff%6e4)/1e3);
+        document.getElementById('nsDays').innerText = d<10?'0'+d:d;
+        document.getElementById('nsHours').innerText = h<10?'0'+h:h;
+        document.getElementById('nsMinutes').innerText = m<10?'0'+m:m;
+        document.getElementById('nsSeconds').innerText = s<10?'0'+s:s;
+    }
+    setInterval(updateCountdown,1000); updateCountdown();
+
+    // ========== LANGAR MODAL (19 dates) ==========
+    const langarList = ["05-मार्च-2018 - नियाज़ ए ख्वाजा गरीब नवाज़","05-मार्च-2018 - नियाज़ ए मोहर्रम लंगर","05-मार्च-2019 - नियाज़ ए ख्वाजा गरीब नवाज़","05-मार्च-2019 - नियाज़ ए मोहर्रम लंगर","05-मार्च-2020 - नियाज़ ए ख्वाजा गरीब नवाज़","05-मार्च-2020 - मास्क वितरण","14-फरवरी-2021 - नियाज़ ए ख्वाजा गरीब नवाज़","20-अगस्त-2021 - नियाज़ ए मोहर्रम लंगर","8-फरवरी-2022 - नियाज़ ए ख्वाजा गरीब नवाज़","9-अगस्त-2022 - नियाज़ ए मोहर्रम लंगर","11-नवम्बर-2022 - नियाज़ ए गौस पाक","29-जनवरी-2023 - ख्वाजा गरीब नवाज़","29-जुलाई-2023 - मोहर्रम लंगर","31-अगस्त-2023 - नियाज़ ए मोहर्रम लंगर","22-अगस्त-2024 - ख्वाजा गरीब नवाज","29-जुलाई-2024 - मोहर्रम लंगर","07-जनवरी-2025 - ख्वाजा गरीब नवाज","06-जुलाई-2025 - मोहर्रम लंगर","25-जून-2026 - नियाज ए मोहर्रम विशेष"];
+    const modal = document.getElementById('nsLangarModal');
+    const closeModal = document.getElementById('nsCloseModalBtn');
+    const totalCard = document.getElementById('nsTotalLangarCard');
+    function showModal() { 
+        const container = document.getElementById('nsLangarDatesList');
+        if(container) { container.innerHTML = ''; langarList.forEach((t,i) => { let p = document.createElement('p'); p.innerHTML = `<i class="fas fa-utensil-spoon"></i> <strong>${i+1}.</strong> ${t}`; container.appendChild(p); }); }
+        modal.classList.add('active');
+    }
+    if(totalCard) totalCard.addEventListener('click', showModal);
+    if(closeModal) closeModal.addEventListener('click', () => modal.classList.remove('active'));
+    if(modal) modal.addEventListener('click', (e) => { if(e.target === modal) modal.classList.remove('active'); });
+    document.getElementById('nsTotalLangarCount') && (document.getElementById('nsTotalLangarCount').innerText = "19");
+
+    // ========== MOBILE MENU OLD ==========
+    const oldMobile = document.getElementById('oldMobileMenu');
+    const oldNav = document.getElementById('oldNavLinks');
+    if(oldMobile) oldMobile.addEventListener('click', () => oldNav.classList.toggle('active'));
+
+    // ========== SMOOTH SCROLL ==========
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function(e) {
+            const target = document.querySelector(this.getAttribute('href'));
+            if(target) { e.preventDefault(); target.scrollIntoView({ behavior: 'smooth' }); if(oldNav) oldNav.classList.remove('active'); }
+        });
+    });
+
+    // ========== NEW BUTTONS & FORM ==========
+    document.getElementById('nsDonateInfoBtn')?.addEventListener('click', () => alert("📌 बैंक विवरण :\nखाता धारक: युवा कमेटी बरेली\nबैंक: SBI बरेली मेन ब्रांच\nIFSC: SBIN0001625\nUPI: yuvacommittee@ybl"));
+    document.getElementById('nsWhatsappJoinBtn')?.addEventListener('click', (e) => { e.preventDefault(); window.open(`https://wa.me/917830118901?text=${encodeURIComponent("अस्सलामु अलैकुम, मैं युवा कमेटी बरेली की वर्क टीम 2026 में जुड़ना चाहता/चाहती हूँ।")}`,'_blank'); });
+    const nsForm = document.getElementById('nsContactForm');
+    if(nsForm) nsForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const name = document.getElementById('nsName').value.trim();
+        const msg = document.getElementById('nsMessage').value.trim();
+        if(!name || !msg) { alert("कृपया नाम और संदेश भरें"); return; }
+        const phone = document.getElementById('nsPhone').value.trim();
+        window.open(`https://wa.me/917983920845?text=${encodeURIComponent(`नाम: ${name}\nमोबाइल: ${phone || 'नहीं दिया'}\nसंदेश: ${msg}`)}`,'_blank');
+        alert("🙏 शुक्रिया! संदेश भेजा गया।");
+        nsForm.reset();
+    });
+</script>
+</body>
+</html>
+
+
+
+
+
+
+
+
 <!-- Hero / Home section -->
 <section id="home">
     <div class="hero">
