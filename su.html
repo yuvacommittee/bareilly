@@ -736,8 +736,8 @@ Gallery</a></li>
 
 
         .member-name-yuva {
-    font-size: 1.35rem;
-    font-weight: 700;
+    font-size: 1.45rem;
+    font-weight: 800;
     color: #1f3b2c;
     display: flex;
     align-items: center;
@@ -756,10 +756,15 @@ Gallery</a></li>
     padding: 5px 14px;
     border-radius: 30px;
     font-weight: 700;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
 }
 
 
 .info-line-yuva {
+    font-size: 1rem;
+    font-weight: 500;
     margin-top: 10px;
     display: flex;
     flex-wrap: wrap;
@@ -921,7 +926,12 @@ Gallery</a></li>
         let html = "";
         for (let m of members) {
             const avatar = m.image && m.image.trim() ? `<img src="${escapeHtml(m.image)}" alt="${escapeHtml(m.name)}" onerror="this.onerror=null; this.parentElement.innerHTML='<i class=\'fas fa-user-circle avatar-fallback-yuva\'></i>';">` : `<i class="fas fa-user-circle avatar-fallback-yuva"></i>`;
-            html += `<div class="col-lg-4 col-md-6"><div class="member-card-yuva" data-id="${m.id}"><div class="card-flex-yuva"><div class="avatar-circle-yuva">${avatar}</div><div class="member-details-yuva"><div class="member-name-yuva">${escapeHtml(m.name)}<span class="rank-chip-yuva">#${rankMap.get(m.id)}</span></div><div class="info-line-yuva"><i class="fas fa-phone-alt"></i> 📞 ${escapeHtml(m.phone)}</div><div class="info-line-yuva"><span class="support-count-yuva"><i class="fas fa-hands-helping"></i> 🤝 कुल सहयोग: ${m.contributionCount} ${m.contributionCount===1?"बार":"बार"}</span><span class="city-badge-yuva"><i class="fas fa-map-marker-alt"></i> ${escapeHtml(m.city)}</span></div></div></div></div></div>`;
+            html += `<div class="col-lg-4 col-md-6"><div class="member-card-yuva" data-id="${m.id}"><div class="card-flex-yuva"><div class="avatar-circle-yuva">${avatar}</div><div class="member-details-yuva"><div class="member-name-yuva">${escapeHtml(m.name)}<span class="rank-chip-yuva">#${rankMap.get(m.id)}</span></div>
+
+            <div class="info-line-yuva">
+            📞 ${escapeHtml(m.phone)}</div>
+
+            <div class="info-line-yuva"><span class="support-count-yuva"> 🤝 कुल सहयोग: ${m.contributionCount} ${m.contributionCount===1?"बार":"बार"}</span><span class="city-badge-yuva"><i class="fas fa-map-marker-alt"></i> ${escapeHtml(m.city)}</span></div></div></div></div></div>`;
         }
         grid.innerHTML = html;
         totalSpan.innerText = members.length;
