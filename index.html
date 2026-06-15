@@ -1690,9 +1690,6 @@ Gallery</a></li>
     </div>
 </section>
 
-<!-- ==================== OLD FOOTER (unchanged) ==================== -->
-
-
 <script>
     // ========== OLD SLIDER FUNCTIONALITY ==========
     const sliderWrapper = document.getElementById('oldSliderWrapper');
@@ -1724,19 +1721,43 @@ Gallery</a></li>
     }
     setInterval(updateCountdown,1000); updateCountdown();
 
-    // ========== LANGAR MODAL ==========
+    // ========== LANGAR MODAL - FIXED FOR MOBILE ==========
     const langarList = ["05-मार्च-2018 - नियाज़ ए ख्वाजा गरीब नवाज़","05-मार्च-2018 - नियाज़ ए मोहर्रम लंगर","05-मार्च-2019 - नियाज़ ए ख्वाजा गरीब नवाज़","05-मार्च-2019 - नियाज़ ए मोहर्रम लंगर","05-मार्च-2020 - नियाज़ ए ख्वाजा गरीब नवाज़","05-मार्च-2020 - मास्क वितरण","14-फरवरी-2021 - नियाज़ ए ख्वाजा गरीब नवाज़","20-अगस्त-2021 - नियाज़ ए मोहर्रम लंगर","8-फरवरी-2022 - नियाज़ ए ख्वाजा गरीब नवाज़","9-अगस्त-2022 - नियाज़ ए मोहर्रम लंगर","11-नवम्बर-2022 - नियाज़ ए गौस पाक","29-जनवरी-2023 - ख्वाजा गरीब नवाज़","29-जुलाई-2023 - मोहर्रम लंगर","31-अगस्त-2023 - नियाज़ ए मोहर्रम लंगर","22-अगस्त-2024 - ख्वाजा गरीब नवाज","29-जुलाई-2024 - मोहर्रम लंगर","07-जनवरी-2025 - ख्वाजा गरीब नवाज","06-जुलाई-2025 - मोहर्रम लंगर","25-जून-2026 - नियाज ए मोहर्रम विशेष"];
     const modal = document.getElementById('nsLangarModal');
     const closeModal = document.getElementById('nsCloseModalBtn');
     const totalCard = document.getElementById('nsTotalLangarCard');
-    function showModal() { 
+    
+    function showModal(e) {
+        // मोबाइल पर event propagation रोकने की ज़रूरत नहीं, बस open करें
         const container = document.getElementById('nsLangarDatesList');
-        if(container) { container.innerHTML = ''; langarList.forEach((t,i) => { let p = document.createElement('p'); p.innerHTML = `<i class="fas fa-utensil-spoon"></i> <strong>${i+1}.</strong> ${t}`; container.appendChild(p); }); }
+        if(container) {
+            container.innerHTML = '';
+            langarList.forEach((t,i) => {
+                let p = document.createElement('p');
+                p.innerHTML = `<i class="fas fa-utensil-spoon"></i> <strong>${i+1}.</strong> ${t}`;
+                container.appendChild(p);
+            });
+        }
         modal.classList.add('active');
     }
-    if(totalCard) totalCard.addEventListener('click', showModal);
-    if(closeModal) closeModal.addEventListener('click', () => modal.classList.remove('active'));
-    if(modal) modal.addEventListener('click', (e) => { if(e.target === modal) modal.classList.remove('active'); });
+    
+    // मोबाइल और डेस्कटॉप दोनों के लिए click + touchstart
+    if(totalCard) {
+        totalCard.addEventListener('click', showModal);
+        totalCard.addEventListener('touchstart', showModal, { passive: false });
+    }
+    if(closeModal) {
+        closeModal.addEventListener('click', () => modal.classList.remove('active'));
+        closeModal.addEventListener('touchstart', () => modal.classList.remove('active'), { passive: false });
+    }
+    if(modal) {
+        modal.addEventListener('click', (e) => {
+            if(e.target === modal) modal.classList.remove('active');
+        });
+        modal.addEventListener('touchstart', (e) => {
+            if(e.target === modal) modal.classList.remove('active');
+        });
+    }
     document.getElementById('nsTotalLangarCount') && (document.getElementById('nsTotalLangarCount').innerText = "19");
 
     // ========== MOBILE MENU OLD ==========
@@ -1747,6 +1768,11 @@ Gallery</a></li>
     // ========== SMOOTH SCROLL ==========
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         anchor.addEventListener('click', function(e) {
+            const target = document.querySelector(this.getAttribute('href'));
+            if(target) { e.preventDefault(); target.scrollIntoView({ behavior: 'smooth' }); if(oldNav) oldNav.classList.remove('active'); }
+        });
+        // मोबाइल टच के लिए भी
+        anchor.addEventListener('touchstart', function(e) {
             const target = document.querySelector(this.getAttribute('href'));
             if(target) { e.preventDefault(); target.scrollIntoView({ behavior: 'smooth' }); if(oldNav) oldNav.classList.remove('active'); }
         });
@@ -1767,6 +1793,8 @@ Gallery</a></li>
         nsForm.reset();
     });
 </script>
+
+
 </body>
 </html>
 
