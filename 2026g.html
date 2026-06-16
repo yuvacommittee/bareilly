@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>कार्य टीम | युवा कमेटी बरेली</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            background: #fef8ef;
+            font-family: 'Segoe UI', 'Poppins', system-ui, sans-serif;
+            color: #2c2b28;
+        }
+        /* Hero Section */
+        .hero-work {
+            background: linear-gradient(135deg, #fdf4e3, #f7e5c2);
+            text-align: center;
+            padding: 3rem 1.5rem;
+            border-radius: 0 0 48px 48px;
+            margin-bottom: 2rem;
+            box-shadow: 0 15px 30px rgba(0,0,0,0.05);
+        }
+        .hero-work h1 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: #2a5f3e;
+        }
+        .hero-work p {
+            font-size: 1.2rem;
+            color: #5a3e2b;
+            margin-top: 0.5rem;
+        }
+        /* Team Grid */
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+        .team-card {
+            background: white;
+            border-radius: 28px;
+            overflow: hidden;
+            box-shadow: 0 12px 28px rgba(0,0,0,0.04);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            border: 1px solid #f0e2ce;
+        }
+        .team-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 35px rgba(0,0,0,0.1);
+            border-color: #c59264;
+        }
+        .card-img-top {
+            width: 100%;
+            height: 280px;
+            object-fit: cover;
+            background: #f5efe5;
+        }
+        .team-card .card-body {
+            padding: 1.5rem;
+            text-align: center;
+        }
+        .team-card h3 {
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: #1f3b2c;
+            margin-bottom: 0.3rem;
+        }
+        .team-card .role {
+            color: #b87c4f;
+            font-weight: 500;
+            margin-bottom: 1rem;
+        }
+        /* Back Button */
+        .btn-home {
+            display: inline-block;
+            background: #6f4e2e;
+            color: white;
+            padding: 0.7rem 1.8rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            margin: 1rem 0;
+            transition: 0.2s;
+        }
+        .btn-home:hover {
+            background: #9b623c;
+            color: white;
+        }
+        /* Modal Styles */
+        .modal-list {
+            max-height: 400px;
+            overflow-y: auto;
+        }
+        .list-item {
+            padding: 0.8rem;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .list-item i {
+            color: #c59264;
+            width: 28px;
+            font-size: 1.2rem;
+        }
+        /* Footer */
+        footer {
+            background: #1b3d2a;
+            color: #f0e2ce;
+            text-align: center;
+            padding: 2rem;
+            margin-top: 3rem;
+            border-radius: 28px 28px 0 0;
+        }
+        .social-icons a {
+            color: #f0e2ce;
+            font-size: 1.5rem;
+            margin: 0 0.5rem;
+            transition: 0.2s;
+            display: inline-block;
+        }
+        .social-icons a:hover {
+            color: #c59264;
+            transform: translateY(-3px);
+        }
+        @media (max-width: 768px) {
+            .hero-work h1 {
+                font-size: 2rem;
+            }
+            .team-grid {
+                gap: 1.5rem;
+            }
+        }
+        /* Custom Scrollbar */
+        .modal-list::-webkit-scrollbar {
+            width: 6px;
+        }
+        .modal-list::-webkit-scrollbar-track {
+            background: #f5f0ee;
+            border-radius: 10px;
+        }
+        .modal-list::-webkit-scrollbar-thumb {
+            background: #c98f72;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body>
+
+<!-- Hero Section -->
+<div class="hero-work">
+    <h1><i class="fas fa-hard-hat"></i> हमारी वर्क टीम</h1>
+    <p>जमीनी स्तर पर सेवा करने वाले हमारे साथी | लंगर की तैयारी से लेकर बंटवारे तक</p>
+</div>
+
+<div class="container">
+    <div class="team-grid" id="teamGrid">
+        <!-- Team members will be dynamically loaded here -->
+        <div class="col-12 text-center py-5">
+            <div class="spinner-border text-success"></div>
+            <p class="mt-2">टीम मेंबर लोड हो रहे हैं...</p>
+        </div>
+    </div>
+    <div class="text-center">
+        <a href="index.html" class="btn-home"><i class="fas fa-home"></i> होम पेज पर लौटें</a>
+    </div>
+</div>
+
+<!-- Modal for Send Photo -->
+<div class="modal fade" id="sendPhotoModal" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header" style="background:#2a5f3e; color:white;">
+                <h5 class="modal-title"><i class="fas fa-camera"></i> फोटो भेजें</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body" id="sendPhotoModalBody">
+                <p>अपनी फोटो और कार्य अनुभव हमारे व्हाट्सएप नंबर पर भेजें।</p>
+                <div class="text-center">
+                    <a href="#" id="whatsappPhotoLink" class="btn btn-success" target="_blank">
+                        <i class="fab fa-whatsapp"></i> व्हाट्सएप पर भेजें
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="social-icons mb-3">
+            <a href="#"><i class="fab fa-facebook-f"></i></a>
+            <a href="#"><i class="fab fa-instagram"></i></a>
+            <a href="#"><i class="fab fa-youtube"></i></a>
+            <a href="#"><i class="fab fa-twitter"></i></a>
+        </div>
+        <p>© 2026 युवा कमेटी (बरेली) | सभी अधिकार सुरक्षित</p>
+        <p>निस्वार्थ सेवा ही हमारा धर्म है।</p>
+    </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+    // Team members data with names and roles
+    const teamMembers = [
+        { name: "Mushahid Khan", role: "वर्क टीम मेंबर", image: "" },
+        { name: "Tahseen Khan", role: "वर्क टीम मेंबर", image: "" },
+        { name: "Ayan Khan", role: "वर्क टीम मेंबर", image: "" },
+        { name: "Sohil Khan", role: "वर्क टीम मेंबर", image: "" },
+        { name: "Farhan Khan", role: "वर्क टीम मेंबर", image: "" },
+        { name: "Bhura Khaa", role: "वर्क टीम मेंबर", image: "" },
+        { name: "Fardeen Khan", role: "वर्क टीम मेंबर", image: "" },
+        { name: "Rehan Khan", role: "वर्क टीम मेंबर", image: "" },
+        { name: "Saif Khan", role: "वर्क टीम मेंबर", image: "" },
+        { name: "Yusuf Khan", role: "वर्क टीम मेंबर", image: "" },
+        { name: "Arbaj Khan", role: "वर्क टीम मेंबर", image: "" },
+        { name: "Tabrez Khan", role: "वर्क टीम मेंबर", image: "" },
+        { name: "Siddiq Khan", role: "वर्क टीम मेंबर", image: "" },
+        { name: "Danish Khan", role: "वर्क टीम मेंबर", image: "" },
+        { name: "Fazal Khan", role: "वर्क टीम मेंबर", image: "" },
+        { name: "Zahid Khan", role: "वर्क टीम मेंबर", image: "" },
+        { name: "fazil Khan", role: "वर्क टीम मेंबर", image: "" },
+        { name: "Shajil Khan", role: "वर्क टीम मेंबर", image: "" },
+        { name: "Ujaif Khan", role: "वर्क टीम मेंबर", image: "" },
+        { name: "Umair Khan", role: "वर्क टीम मेंबर", image: "" },
+        { name: "Asif Khan", role: "वर्क टीम मेंबर", image: "" },
+        { name: "Furkan ( Desi )", role: "वर्क टीम मेंबर", image: "" },
+        { name: "Arman Khan (paya)", role: "वर्क टीम मेंबर", image: "" },
+        { name: "Sagil Khan", role: "वर्क टीम मेंबर", image: "" }
+    ];
+
+    function escapeHtml(str) {
+        if (!str) return "";
+        return str.replace(/[&<>]/g, function(m) {
+            if (m === '&') return '&amp;';
+            if (m === '<') return '&lt;';
+            if (m === '>') return '&gt;';
+            return m;
+        });
+    }
+
+    function renderTeamMembers() {
+        const grid = document.getElementById("teamGrid");
+        grid.innerHTML = "";
+        
+        teamMembers.forEach(member => {
+            const card = document.createElement("div");
+            card.className = "team-card";
+            
+            // Placeholder image if no image provided
+            const imageHtml = member.image ? 
+                `<img src="${escapeHtml(member.image)}" class="card-img-top" alt="${escapeHtml(member.name)}">` : 
+                `<div class="card-img-top" style="background: #e8f0e8; display: flex; align-items: center; justify-content: center;">
+                    <i class="fas fa-user-circle" style="font-size: 5rem; color: #b87c4f;"></i>
+                </div>`;
+            
+            card.innerHTML = `
+                ${imageHtml}
+                <div class="card-body">
+                    <h3>${escapeHtml(member.name)}</h3>
+                    <div class="role">${escapeHtml(member.role)}</div>
+                </div>
+            `;
+            
+            // Add click event for sending photo (optional)
+            card.addEventListener('click', () => {
+                const message = `नमस्ते, मैं ${member.name} हूँ। मैं युवा कमेटी की वर्क टीम में हूँ। मेरी फोटो और कार्य अनुभव संलग्न है।`;
+                const whatsappUrl = `https://wa.me/917983920845?text=${encodeURIComponent(message)}`;
+                document.getElementById("whatsappPhotoLink").href = whatsappUrl;
+                new bootstrap.Modal(document.getElementById("sendPhotoModal")).show();
+            });
+            
+            grid.appendChild(card);
+        });
+    }
+
+    // Load team members on page load
+    renderTeamMembers();
+</script>
+</body>
+</html>
