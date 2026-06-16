@@ -310,7 +310,7 @@ var _wpUtilSettings = {"ajax":{"url":"\/wp-admin\/admin-ajax.php"}};
 
 <li class="menu-item menu-item-type-custom menu-item-object-custom current-menu-item current_page_item menu-item-home menu-item-2939">
 
-    <a href="#" aria-current="page" class="elementor-item elementor-item-active">Home</a></li>
+    <a href="index.html" aria-current="page" class="elementor-item elementor-item-active">Home</a></li>
 
 <li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-120">
 
@@ -356,7 +356,7 @@ Gallery</a></li>
                     <nav class="elementor-nav-menu--dropdown elementor-nav-menu__container" aria-hidden="true">
                 <ul id="menu-2-25301bf" class="elementor-nav-menu"><li class="menu-item menu-item-type-custom menu-item-object-custom current-menu-item current_page_item menu-item-home menu-item-2939">
 
-<a href="#" aria-current="page" class="elementor-item elementor-item-active" tabindex="-1">Home</a></li>
+<a href="index.html" aria-current="page" class="elementor-item elementor-item-active" tabindex="-1">Home</a></li>
 
 <li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-120">
 
@@ -438,7 +438,7 @@ Gallery</a></li>
 
 <li class="menu-item menu-item-type-custom menu-item-object-custom current-menu-item current_page_item menu-item-home menu-item-2939">
 
-    <a href="#" aria-current="page" class="elementor-item elementor-item-active">Home</a></li>
+    <a href="index.html" aria-current="page" class="elementor-item elementor-item-active">Home</a></li>
 
 <li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-120">
 
@@ -481,7 +481,7 @@ Gallery</a></li>
 
 <li class="menu-item menu-item-type-custom menu-item-object-custom current-menu-item current_page_item menu-item-home menu-item-2939">
 
-    <a href="#" aria-current="page" class="elementor-item elementor-item-active" tabindex="-1">Home</a></li>
+    <a href="index.html" aria-current="page" class="elementor-item elementor-item-active" tabindex="-1">Home</a></li>
 
 <li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-120">
 
@@ -575,55 +575,46 @@ Gallery</a></li>
 
 
 <!------------------------------- #main -------------------->
-
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-    <title>लंगर सहयोगी दस्तावेज | युवा कमेटी बरेली</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <style>
-        /* === PURANE SITE JAISA DESIGN (Cream + Green + Gold) - only main content styles === */
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
             background: #fef8ef;
             font-family: 'Segoe UI', 'Poppins', system-ui, sans-serif;
             color: #2c2b28;
         }
-
-        /* Page Title Card (old style) */
-        .page-title-card {
-            background: #fffcf5;
-            border-radius: 32px;
-            padding: 2rem 1.5rem;
-            margin: 2rem auto;
-            box-shadow: 0 12px 28px rgba(0,0,0,0.04);
-            border-left: 6px solid #c59264;
-            text-align: center;
-        }
-        .page-title-card h1 {
+        .page-title-card-yuva {
+    background: #fffcf5;
+    border-radius: 32px;
+    padding: 2rem 1.5rem;
+    margin: 2rem auto;
+    box-shadow:
+        0 20px 40px rgba(0,0,0,.05),
+        0 2px 8px rgba(197,146,100,.15);
+    border-left: 6px solid #c59264;
+    text-align: center;
+}
+        .page-title-card-yuva h1 {
             font-size: 2.2rem;
             font-weight: 700;
             color: #2a5f3e;
         }
-        .page-title-card h3 {
+        .page-title-card-yuva h3 {
             color: #1f3b2c;
             font-weight: 600;
         }
-        .page-title-card p {
-            color: #5a3e2b;
-        }
+        .search-glass-yuva {
+    background: white;
+    border-radius: 60px;
+    padding: 0.2rem;
+    box-shadow:
+        0 10px 25px rgba(0,0,0,.05),
+        0 2px 10px rgba(197,146,100,.12);
+    border: 1px solid #f0e2ce;
+}
 
-        /* Search Bar (cream theme) */
-        .search-glass {
-            background: white;
-            border-radius: 60px;
-            padding: 0.2rem;
-            box-shadow: 0 8px 20px rgba(0,0,0,0.05);
-            border: 1px solid #f0e2ce;
-        }
-        .search-input-custom {
+        .search-input-custom-yuva {
             border: none;
             padding: 14px 24px 14px 50px;
             width: 100%;
@@ -631,14 +622,14 @@ Gallery</a></li>
             outline: none;
             background: transparent;
         }
-        .search-icon-abs {
+        .search-icon-abs-yuva {
             position: absolute;
             left: 20px;
             top: 50%;
             transform: translateY(-50%);
             color: #b87c4f;
         }
-        .clear-search {
+        .clear-search-yuva {
             position: absolute;
             right: 20px;
             top: 50%;
@@ -652,161 +643,241 @@ Gallery</a></li>
             visibility: hidden;
             cursor: pointer;
         }
-        .clear-search.show { opacity: 1; visibility: visible; }
-        .search-stats-badge {
+        .clear-search-yuva.show-yuva { opacity: 1; visibility: visible; }
+        .search-stats-badge-yuva {
             background: #fff0e6;
             padding: 6px 18px;
             border-radius: 40px;
             font-size: 0.9rem;
             color: #5a3e2b;
         }
+        .member-card-yuva {
+    background: linear-gradient(
+        180deg,
+        #ffffff 0%,
+        #fffcf8 100%);
+    border-radius: 28px;
+    box-shadow: 0 12px 24px rgba(0,0,0,.05);
+    border: 1px solid rgba(197,146,100,.25);
+    overflow: hidden;
+    position: relative;
+    cursor: pointer;
+    transition: 0.25s;
+    height: 100%;
+}
 
-        /* Member Cards (old style) */
-        .member-card {
-            background: white;
-            border-radius: 28px;
-            box-shadow: 0 12px 24px rgba(0,0,0,0.04);
-            cursor: pointer;
-            transition: 0.25s;
-            height: 100%;
-            border: 1px solid #f0e2ce;
-            overflow: hidden;
-        }
-        .member-card:hover {
+
+
+.member-card-yuva:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 25px 40px rgba(0,0,0,.10);
+}
+
+
+
+.member-card-yuva:active{
+    transform:scale(.98);
+}
+
+
+.member-card-yuva::before{
+    content:"";
+    position:absolute;
+    top:0;
+    left:0;
+    width:100%;
+    height:6px;
+    background:linear-gradient(
+        90deg,
+        #c59264,
+        #e0b27f,
+        #c59264
+    );
+}
+
+
+        .member-card-yuva:hover {
             transform: translateY(-5px);
             box-shadow: 0 20px 30px rgba(0,0,0,0.08);
         }
-        .card-flex {
-            display: flex;
-            align-items: center;
-            padding: 1.2rem;
-            gap: 1rem;
-        }
-        .avatar-circle {
-            width: 85px;
-            height: 85px;
-            border-radius: 50%;
-            background: #f5efe5;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            overflow: hidden;
-            border: 3px solid #c59264;
-            box-shadow: 0 6px 12px rgba(0,0,0,0.05);
-        }
-        .avatar-circle img {
+
+
+        .card-flex-yuva {
+    display: flex;
+    align-items: center;
+    padding: 1rem;
+    gap: 1rem;
+}
+
+
+        .avatar-circle-yuva {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    background: #f5efe5;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    border: 4px solid #c59264;
+    box-shadow: 0 6px 15px rgba(197,146,100,.25);
+}
+
+
+        .avatar-circle-yuva img {
             width: 100%;
             height: 100%;
             object-fit: cover;
         }
-        .avatar-fallback {
+        .avatar-fallback-yuva {
             font-size: 3rem;
             color: #b87c4f;
         }
-        .member-name {
-            font-size: 1.3rem;
-            font-weight: 700;
-            color: #1f3b2c;
-            display: flex;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 8px;
-        }
-        .rank-chip {
-            background: linear-gradient(135deg, #2a5f3e, #1e4630);
-            color: white;
-            font-size: 0.7rem;
-            padding: 3px 12px;
-            border-radius: 30px;
-        }
-        .info-line {
-            margin-top: 8px;
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-            align-items: center;
-        }
-        .support-count {
-            background: #fef3c7;
-            border-radius: 40px;
-            padding: 4px 14px;
-            font-weight: 600;
-            color: #b45309;
-            font-size: 0.8rem;
-        }
-        .city-badge {
-            background: #e8f0e8;
-            border-radius: 40px;
-            padding: 4px 12px;
-            font-size: 0.75rem;
-            color: #2a5f3e;
-        }
-        @media (max-width: 550px) {
-            .card-flex { flex-direction: column; text-align: center; }
-            .info-line { justify-content: center; }
-        }
 
-        /* Modal Styles (old theme) */
-        .receipt-modal .modal-content {
+
+        .member-name-yuva {
+    font-size: 1.45rem;
+    font-weight: 800;
+    color: #1f3b2c;
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 6px;
+    justify-content: center;
+}
+
+        .rank-chip-yuva {
+    background: linear-gradient(
+        135deg,
+        #2a5f3e,
+        #163624
+    );
+    color: white;
+    font-size: 0.8rem;
+    padding: 5px 14px;
+    border-radius: 30px;
+    font-weight: 700;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+
+.info-line-yuva {
+    font-size: 1rem;
+    color: #3b3b3b;
+    font-weight: 600;
+    margin-top: 10px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    align-items: center;
+    justify-content: center;
+}
+
+        
+
+.support-count-yuva {
+    background: linear-gradient(
+        135deg,
+        #fff4c7,
+        #ffe59a
+    );
+    border: 1px solid #f3d26a;
+    border-radius: 40px;
+    padding: 4px 14px;
+    font-weight: 700;
+    color: #9a5a00;
+    font-size: 0.8rem;
+}
+.support-count-yuva i{
+    margin-right: 5px;
+}
+
+        
+
+
+       .city-badge-yuva {
+    background: #edf5ed;
+    border: 1px solid #d7e8d7;
+    border-radius: 40px;
+    padding: 4px 12px;
+    font-size: 0.8rem;
+    color: #2a5f3e;
+    font-weight: 600;
+}
+
+
+
+
+
+        @media (max-width: 550px) {
+            .card-flex-yuva { flex-direction: column; text-align: center; }
+            .info-line-yuva { justify-content: center; }
+        }
+        .receipt-modal-yuva .modal-content {
             border-radius: 32px;
             border: none;
             overflow: hidden;
         }
-        .receipt-header-gradient {
+        .receipt-header-gradient-yuva {
             background: linear-gradient(135deg, #2a5f3e, #1e4630);
             padding: 1.2rem;
         }
-        .year-badge-green {
+        .year-badge-green-yuva {
             background: #fefaf5;
             border-left: 5px solid #c59264;
             padding: 12px 15px;
             border-radius: 20px;
             margin-bottom: 12px;
         }
-        .year-missing {
+        .year-missing-yuva {
             background: #f8f5ef;
             border-left: 5px solid #d1c7b0;
             padding: 12px 15px;
             border-radius: 20px;
             margin-bottom: 12px;
         }
+        .multi-contrib-yuva {
+            margin-top: 6px;
+            padding-left: 12px;
+            border-left: 2px dotted #c59264;
+        }
     </style>
 </head>
-<body>
 
 <main class="container py-2">
-    <div class="page-title-card">
+    <div class="page-title-card-yuva">
         <h1><i class="fas fa-hand-holding-heart"></i> लंगर फाइनेंस कमेटी</h1>
         <h3 class="mt-2 fs-4">साल 2018 से 2026 तक के तआवुन करने वाले अहबाब</h3>
-        <p class="mt-3">लंगर ख़िदमत में माली तआवुन व नियाज़ पेश करने वाले ख़ैरख़्वाह हज़रात। सहयोग संख्या और मुकम्मल हिस्ट्री देखने के लिए कार्ड पर क्लिक करें। ✨🍽️🤲</p>
+        <p class="mt-3">लंगर ख़िदमत में माली तआवुन व नियाज़ पेश करने वाले ख़ैरख़्वाह हज़रात। सहयोग संख्या और मुकम्मल हिस्ट्री देखने के लिए कार्ड पर क्लिक करें।</p>
     </div>
 
-    <div class="search-container position-relative mx-auto" style="max-width: 720px; margin-bottom: 2.5rem;">
-        <div class="search-glass position-relative">
-            <div class="search-icon-abs"><i class="fas fa-search"></i></div>
-            <input type="text" id="searchInput" class="search-input-custom" placeholder="नाम, फ़ोन या शहर से खोजें..." autocomplete="off">
-            <button id="searchClearBtn" class="clear-search"><i class="fas fa-times"></i></button>
+    <div class="search-container-yuva position-relative mx-auto" style="max-width: 720px; margin-bottom: 2.5rem;">
+        <div class="search-glass-yuva position-relative">
+            <div class="search-icon-abs-yuva"><i class="fas fa-search"></i></div>
+            <input type="text" id="searchInput-yuva" class="search-input-custom-yuva" placeholder="नाम, फ़ोन या शहर से खोजें..." autocomplete="off">
+            <button id="searchClearBtn-yuva" class="clear-search-yuva"><i class="fas fa-times"></i></button>
         </div>
-        <div class="text-center mt-3" id="searchStatsArea">
-            <span class="search-stats-badge"><i class="fas fa-users"></i> कुल सदस्य: <strong id="totalMemberCount">0</strong></span>
+        <div class="text-center mt-3" id="searchStatsArea-yuva">
+            <span class="search-stats-badge-yuva"><i class="fas fa-users"></i> कुल सदस्य: <strong id="totalMemberCount-yuva">0</strong></span>
         </div>
     </div>
 
-    <div id="membersGridContainer" class="row g-4">
+    <div id="membersGridContainer-yuva" class="row g-4">
         <div class="col-12 text-center py-5"><div class="spinner-border text-success"></div><p class="mt-2">डेटा लोड हो रहा है...</p></div>
     </div>
 </main>
 
-<!-- Modal (old style) -->
-<div class="modal fade receipt-modal" id="contributionModal" tabindex="-1">
+<div class="modal fade receipt-modal-yuva" id="contributionModal-yuva" tabindex="-1">
     <div class="modal-dialog modal-lg modal-dialog-centered">
         <div class="modal-content">
-            <div class="receipt-header-gradient text-white p-3 text-center">
+            <div class="receipt-header-gradient-yuva text-white p-3 text-center">
                 <h4><i class="fas fa-chronometer"></i> लंगर ख़िदमत का सहयोगी इतिहास</h4>
-                <p id="modalMemberTitle" class="mb-0 fs-5 fw-bold">सदस्य का नाम</p>
+                <p id="modalMemberTitle-yuva" class="mb-0 fs-5 fw-bold">सदस्य का नाम</p>
                 <small>साल-दर-साल लंगर तआवुन</small>
             </div>
-            <div class="modal-body p-4" id="modalReceiptBody">लोड हो रहा है...</div>
+            <div class="modal-body p-4" id="modalReceiptBody-yuva">लोड हो रहा है...</div>
             <div class="modal-footer border-0 bg-light">
                 <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">बंद करें</button>
                 <button type="button" class="btn btn-primary" onclick="window.print()">प्रिंट करें</button>
@@ -817,84 +888,132 @@ Gallery</a></li>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 <script>
-    // ==================== GOOGLE SHEETS CONFIGURATION ====================
     const API_KEY = "AIzaSyDyYGbNGoxSmOCxM3AWIByds9g0zbOUY-g";
     const MEMBERS_SHEET_ID = "1oAuyfC-Ks29yhXS_UMmFeTu54tNaJWGC7adZURQMRTc";
     const CONTRIB_SHEET_ID = "1oAuyfC-Ks29yhXS_UMmFeTu54tNaJWGC7adZURQMRTc";
-    const DEMO_MODE = false;
 
     let allMembers = [];
     let filteredMembers = [];
     let contributionsMap = new Map();
     let bootstrapModal = null;
 
-    const grid = document.getElementById("membersGridContainer");
-    const searchInput = document.getElementById("searchInput");
-    const clearBtn = document.getElementById("searchClearBtn");
-    const totalSpan = document.getElementById("totalMemberCount");
-    const statsArea = document.getElementById("searchStatsArea");
+    const grid = document.getElementById("membersGridContainer-yuva");
+    const searchInput = document.getElementById("searchInput-yuva");
+    const clearBtn = document.getElementById("searchClearBtn-yuva");
+    const totalSpan = document.getElementById("totalMemberCount-yuva");
+    const statsArea = document.getElementById("searchStatsArea-yuva");
 
     function escapeHtml(str) { if(!str) return ""; return str.replace(/[&<>]/g, m => ({ '&':'&amp;', '<':'&lt;', '>':'&gt;' }[m])); }
+    function showError(msg) { grid.innerHTML = `<div class="col-12 text-center py-5"><div class="alert alert-danger">⚠️ ${msg}</div></div>`; totalSpan.innerText = "0"; }
 
-    function showError(msg) { grid.innerHTML = `<div class="col-12 text-center py-5"><div class="alert alert-danger shadow-sm">⚠️ ${msg}</div></div>`; totalSpan.innerText = "0"; }
+    function extractYearFromContribution(contrib) {
+        const dateStr = contrib.date ? contrib.date.toString().trim() : "";
+        if (dateStr) {
+            let parts = dateStr.split(/[-/]/);
+            if (parts.length === 3) {
+                let yearCandidate = null;
+                if (parts[0].length === 4 && parts[0] >= 1900 && parts[0] <= 2100) yearCandidate = parts[0];
+                else if (parts[2].length === 4 && parts[2] >= 1900 && parts[2] <= 2100) yearCandidate = parts[2];
+                if (yearCandidate) return yearCandidate;
+            }
+            const yearMatch = dateStr.match(/\b(19|20)\d{2}\b/);
+            if (yearMatch) return yearMatch[0];
+        }
+        const langerText = contrib.langer ? contrib.langer.toString() : "";
+        const match = langerText.match(/\b(20\d{2})\b/);
+        if (match) return match[0];
+        return null;
+    }
 
     function renderCards(members) {
         if (!members.length) { grid.innerHTML = `<div class="col-12 text-center py-5"><div class="alert alert-warning">कोई सदस्य नहीं मिला</div></div>`; totalSpan.innerText = "0"; return; }
         const rankMap = new Map(); members.forEach((m, idx) => rankMap.set(m.id, idx+1));
         let html = "";
         for (let m of members) {
-            const avatar = m.image && m.image.trim() ? `<img src="${escapeHtml(m.image)}" alt="${escapeHtml(m.name)}" onerror="this.onerror=null; this.parentElement.innerHTML='<i class=\'fas fa-user-circle avatar-fallback\'></i>';">` : `<i class="fas fa-user-circle avatar-fallback"></i>`;
-            html += `<div class="col-lg-4 col-md-6"><div class="member-card" data-id="${m.id}"><div class="card-flex"><div class="avatar-circle">${avatar}</div><div class="member-details"><div class="member-name">${escapeHtml(m.name)}<span class="rank-chip">#${rankMap.get(m.id)}</span></div><div class="info-line"><i class="fas fa-phone-alt"></i> 📞 ${escapeHtml(m.phone)}</div><div class="info-line"><span class="support-count"><i class="fas fa-hands-helping"></i> 🤝 कुल सहयोग: ${m.contributionCount} ${m.contributionCount===1?"बार":"बार"}</span><span class="city-badge"><i class="fas fa-map-marker-alt"></i> ${escapeHtml(m.city)}</span></div></div></div></div></div>`;
+            const avatar = m.image && m.image.trim() ? `<img src="${escapeHtml(m.image)}" alt="${escapeHtml(m.name)}" onerror="this.onerror=null; this.parentElement.innerHTML='<i class=\'fas fa-user-circle avatar-fallback-yuva\'></i>';">` : `<i class="fas fa-user-circle avatar-fallback-yuva"></i>`;
+            html += `<div class="col-lg-4 col-md-6"><div class="member-card-yuva" data-id="${m.id}"><div class="card-flex-yuva"><div class="avatar-circle-yuva">${avatar}</div><div class="member-details-yuva"><div class="member-name-yuva">${escapeHtml(m.name)}<span class="rank-chip-yuva">#${rankMap.get(m.id)}</span></div>
+
+            <div class="info-line-yuva">
+            📞 ${escapeHtml(m.phone)}</div>
+
+            <div class="info-line-yuva"><span class="support-count-yuva"> 🤝 कुल सहयोग: ${m.contributionCount} ${m.contributionCount===1?"बार":"बार"}</span><span class="city-badge-yuva"><i class="fas fa-map-marker-alt"></i> ${escapeHtml(m.city)}</span></div></div></div></div></div>`;
         }
         grid.innerHTML = html;
         totalSpan.innerText = members.length;
-        document.querySelectorAll('.member-card').forEach(card => card.addEventListener('click', () => openModal(card.dataset.id)));
+        document.querySelectorAll('.member-card-yuva').forEach(card => card.addEventListener('click', () => openModal(card.dataset.id)));
     }
 
     function filterMembers() {
         const term = searchInput.value.trim().toLowerCase();
-        if (term === "") { filteredMembers = [...allMembers]; clearBtn.classList.remove("show"); }
-        else { clearBtn.classList.add("show"); filteredMembers = allMembers.filter(m => m.name.toLowerCase().includes(term) || m.phone.includes(term) || m.city.toLowerCase().includes(term)); }
+        if (term === "") { filteredMembers = [...allMembers]; clearBtn.classList.remove("show-yuva"); }
+        else { clearBtn.classList.add("show-yuva"); filteredMembers = allMembers.filter(m => m.name.toLowerCase().includes(term) || m.phone.includes(term) || m.city.toLowerCase().includes(term)); }
         renderCards(filteredMembers);
-        statsArea.innerHTML = term === "" ? `<span class="search-stats-badge">कुल सदस्य: <strong>${allMembers.length}</strong></span>` : `<span class="search-stats-badge">‘${escapeHtml(term)}’ के लिए <strong>${filteredMembers.length}</strong> परिणाम</span>`;
+        statsArea.innerHTML = term === "" ? `<span class="search-stats-badge-yuva">कुल सदस्य: <strong>${allMembers.length}</strong></span>` : `<span class="search-stats-badge-yuva">‘${escapeHtml(term)}’ के लिए <strong>${filteredMembers.length}</strong> परिणाम</span>`;
     }
 
     function openModal(memberId) {
         const member = allMembers.find(m => m.id === memberId);
         if (!member) return;
-        document.getElementById("modalMemberTitle").innerHTML = `${escapeHtml(member.name)} (${escapeHtml(member.phone)})`;
+        document.getElementById("modalMemberTitle-yuva").innerHTML = `${escapeHtml(member.name)} (${escapeHtml(member.phone)})`;
         const contribs = contributionsMap.get(memberId) || [];
+        
         const byYear = new Map();
-        contribs.forEach(c => {
-            let year = "";
-            if (c.date && c.date.split("-").length === 3) year = c.date.split("-")[2];
-            else { const match = c.langer.match(/\b(20\d{2})\b/); if (match) year = match[1]; }
-            if (year && !byYear.has(year)) byYear.set(year, c);
-        });
+        for (let c of contribs) {
+            const year = extractYearFromContribution(c);
+            if (year) {
+                if (!byYear.has(year)) byYear.set(year, []);
+                byYear.get(year).push(c);
+            } else {
+                if (!byYear.has("अन्य")) byYear.set("अन्य", []);
+                byYear.get("अन्य").push(c);
+            }
+        }
+
         let html = `<div class="mb-3"><strong>लंगर सहयोग वर्षवार (2018-2026)</strong></div>`;
         for (let y = 2026; y >= 2018; y--) {
             const yStr = y.toString();
-            const item = byYear.get(yStr);
-            if (item) html += `<div class="year-badge-green p-3 mb-2 rounded-3"><div class="fw-bold">${yStr} 🟢</div><div>${escapeHtml(item.langer)}</div><div class="small">📅 ${escapeHtml(item.date)}</div>${item.note ? `<div class="small text-muted">✍️ ${escapeHtml(item.note)}</div>` : ''}</div>`;
-            else html += `<div class="year-missing p-3 mb-2 rounded-3"><div class="fw-bold">${yStr} ⚪</div><div class="small">कोई सहयोग रिकॉर्ड नहीं</div></div>`;
+            const contribList = byYear.get(yStr);
+            if (contribList && contribList.length) {
+                html += `<div class="year-badge-green-yuva p-3 mb-2 rounded-3"><div class="fw-bold">${yStr} 🟢 (${contribList.length} प्रविष्टियाँ)</div>`;
+                for (let idx = 0; idx < contribList.length; idx++) {
+                    const item = contribList[idx];
+                    html += `<div class="multi-contrib-yuva mt-2"><div>🍽️ ${escapeHtml(item.langer)}</div>`;
+                    if (item.date) html += `<div class="small">📅 ${escapeHtml(item.date)}</div>`;
+                    if (item.note) html += `<div class="small text-muted">✍️ ${escapeHtml(item.note)}</div>`;
+                    html += `</div>`;
+                }
+                html += `</div>`;
+            } else {
+                html += `<div class="year-missing-yuva p-3 mb-2 rounded-3"><div class="fw-bold">${yStr} ⚪</div><div class="small">कोई सहयोग रिकॉर्ड नहीं</div></div>`;
+            }
         }
+        if (byYear.has("अन्य")) {
+            const otherList = byYear.get("अन्य");
+            html += `<div class="year-badge-green-yuva p-3 mb-2 rounded-3" style="border-left-color:#b87333;"><div class="fw-bold">📆 वर्ष निर्धारित नहीं (${otherList.length} प्रविष्टियाँ)</div>`;
+            for (let item of otherList) {
+                html += `<div class="multi-contrib-yuva mt-2"><div>🍽️ ${escapeHtml(item.langer)}</div>`;
+                if (item.date) html += `<div class="small">📅 ${escapeHtml(item.date)}</div>`;
+                if (item.note) html += `<div class="small text-muted">✍️ ${escapeHtml(item.note)}</div>`;
+                html += `</div>`;
+            }
+            html += `</div>`;
+        }
+
         html += `<div class="mt-3 pt-2 border-top fw-bold text-end">📊 कुल सहयोगी कार्यक्रम : ${contribs.length}</div>`;
-        document.getElementById("modalReceiptBody").innerHTML = html;
-        if (!bootstrapModal) bootstrapModal = new bootstrap.Modal(document.getElementById("contributionModal"));
+        document.getElementById("modalReceiptBody-yuva").innerHTML = html;
+        if (!bootstrapModal) bootstrapModal = new bootstrap.Modal(document.getElementById("contributionModal-yuva"));
         bootstrapModal.show();
     }
 
     async function fetchFromSheets() {
-        if (DEMO_MODE) return;
-        if (!API_KEY || API_KEY === "YOUR_GOOGLE_SHEETS_API_KEY") { showError("❌ API_KEY missing. Please replace with actual Google Sheets API key."); return; }
         try {
             const membersUrl = `https://sheets.googleapis.com/v4/spreadsheets/${MEMBERS_SHEET_ID}/values/Members?key=${API_KEY}`;
             const contribUrl = `https://sheets.googleapis.com/v4/spreadsheets/${CONTRIB_SHEET_ID}/values/Contributions?key=${API_KEY}`;
             const [mRes, cRes] = await Promise.all([fetch(membersUrl), fetch(contribUrl)]);
-            if (!mRes.ok || !cRes.ok) throw new Error(`HTTP ${mRes.status} / ${cRes.status} – check API key and sheet permissions`);
+            if (!mRes.ok || !cRes.ok) throw new Error(`HTTP ${mRes.status} / ${cRes.status}`);
             const mData = await mRes.json(), cData = await cRes.json();
             const memberRows = mData.values || [];
-            if (memberRows.length < 2) throw new Error("Members sheet empty or missing header");
+            if (memberRows.length < 2) throw new Error("Members sheet empty");
             const members = [];
             for (let i=1; i<memberRows.length; i++) {
                 const row = memberRows[i];
@@ -911,13 +1030,13 @@ Gallery</a></li>
             }
             allMembers = members.map(m => ({ ...m, contributionCount: (contributionsMap.get(m.id)||[]).length }));
             allMembers.sort((a,b) => b.contributionCount - a.contributionCount);
-            if (!allMembers.length) throw new Error("कोई सदस्य नहीं मिला");
+            if (!allMembers.length) throw new Error("कोई सदस्य नहीं");
             filteredMembers = [...allMembers];
             renderCards(filteredMembers);
-            statsArea.innerHTML = `<span class="search-stats-badge">कुल सदस्य: <strong>${allMembers.length}</strong> | लंगर सहयोगी</span>`;
+            statsArea.innerHTML = `<span class="search-stats-badge-yuva">कुल सदस्य: <strong>${allMembers.length}</strong> | लंगर सहयोगी</span>`;
         } catch(err) {
             console.error(err);
-            showError(`डेटा लोड विफल: ${err.message}<br>सुनिश्चित करें कि API_KEY सही है और शीट्स (Members, Contributions) मौजूद हैं।`);
+            showError(`डेटा लोड विफल: ${err.message}<br>सुनिश्चित करें कि शीट्स (Members, Contributions) मौजूद हैं और API_KEY सही है।`);
         }
     }
 
@@ -925,8 +1044,11 @@ Gallery</a></li>
     clearBtn.addEventListener("click", () => { searchInput.value = ""; filterMembers(); searchInput.focus(); });
     fetchFromSheets();
 </script>
-</body>
-</html>
+
+
+
+
+
 
 
        <!--------------dwefwefwew--------->
