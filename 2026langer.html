@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>हमारे प्रोग्राम | युवा कमेटी बरेली</title>
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome 6 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            background: #fef8ef;
+            font-family: 'Segoe UI', 'Poppins', system-ui, sans-serif;
+            color: #2c2b28;
+        }
+        /* Hero Section */
+        .hero-programme {
+            background: linear-gradient(135deg, #fdf4e3, #f7e5c2);
+            text-align: center;
+            padding: 3rem 1.5rem;
+            border-radius: 0 0 48px 48px;
+            margin-bottom: 2rem;
+            box-shadow: 0 15px 30px rgba(0,0,0,0.05);
+        }
+        .hero-programme h1 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: #2a5f3e;
+        }
+        .hero-programme p {
+            font-size: 1.2rem;
+            color: #5a3e2b;
+            margin-top: 0.5rem;
+        }
+        /* Table Styles */
+        .programme-table {
+            background: white;
+            border-radius: 28px;
+            overflow-x: auto;
+            box-shadow: 0 12px 28px rgba(0,0,0,0.04);
+            margin: 2rem 0;
+        }
+        .programme-table table {
+            width: 100%;
+            min-width: 700px;
+            border-collapse: collapse;
+        }
+        .programme-table th, .programme-table td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid #f0e2ce;
+            vertical-align: middle;
+        }
+        .programme-table th {
+            background: #2a5f3e;
+            color: white;
+            font-weight: 600;
+        }
+        .programme-table tr:hover {
+            background: #fffcf5;
+        }
+        /* Status Badge */
+        .status-badge {
+            background: #e8f0e8;
+            color: #2a5f3e;
+            padding: 0.2rem 0.8rem;
+            border-radius: 40px;
+            font-size: 0.8rem;
+            display: inline-block;
+        }
+        /* Action Buttons */
+        .btn-sm-custom {
+            background: #c59264;
+            color: white;
+            border: none;
+            padding: 0.4rem 1rem;
+            border-radius: 40px;
+            font-size: 0.8rem;
+            margin: 0.2rem;
+            cursor: pointer;
+            transition: 0.2s;
+            text-decoration: none;
+            display: inline-block;
+        }
+        .btn-sm-custom:hover {
+            background: #a56e3e;
+            transform: translateY(-2px);
+        }
+        .btn-outline-sm {
+            background: transparent;
+            border: 1px solid #c59264;
+            color: #c59264;
+            padding: 0.3rem 0.9rem;
+        }
+        .btn-outline-sm:hover {
+            background: #c59264;
+            color: white;
+        }
+        /* Modal Styles */
+        .modal-list {
+            max-height: 400px;
+            overflow-y: auto;
+        }
+        .list-item {
+            padding: 0.6rem;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .list-item i {
+            color: #c59264;
+            width: 24px;
+        }
+        /* Back Button */
+        .btn-home {
+            display: inline-block;
+            background: #6f4e2e;
+            color: white;
+            padding: 0.7rem 1.8rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            margin: 1rem 0;
+            transition: 0.2s;
+        }
+        .btn-home:hover {
+            background: #9b623c;
+            color: white;
+        }
+        /* Footer */
+        footer {
+            background: #1b3d2a;
+            color: #f0e2ce;
+            text-align: center;
+            padding: 2rem;
+            margin-top: 3rem;
+            border-radius: 28px 28px 0 0;
+        }
+        .social-icons a {
+            color: #f0e2ce;
+            font-size: 1.5rem;
+            margin: 0 0.5rem;
+            transition: 0.2s;
+            display: inline-block;
+        }
+        .social-icons a:hover {
+            color: #c59264;
+            transform: translateY(-3px);
+        }
+        @media (max-width: 768px) {
+            .hero-programme h1 {
+                font-size: 2rem;
+            }
+            .programme-table th, .programme-table td {
+                padding: 0.6rem;
+                font-size: 0.85rem;
+            }
+            .btn-sm-custom {
+                padding: 0.3rem 0.8rem;
+                font-size: 0.7rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<!-- Hero Section -->
+<div class="hero-programme">
+    <h1><i class="fas fa-calendar-alt"></i> हमारे प्रोग्राम</h1>
+    <p>लंगर और नियाज़ की पूरी सूची | सहयोगी सदस्य और कार्य टीम</p>
+</div>
+
+<div class="container">
+    <div class="programme-table">
+        <table id="programmeTable">
+            <thead>
+                <tr><th>क्र.</th><th>साल</th><th>प्रोग्राम</th><th>स्टेटस</th><th>सदस्य सूची</th><th>कार्य टीम</th></tr>
+            </thead>
+            <tbody id="programmeTbody">
+                <tr><td colspan="6" class="text-center py-4"><div class="spinner-border text-success"></div><p class="mt-2">डेटा लोड हो रहा है...</p></td></tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="text-center">
+        <a href="index.html" class="btn-home"><i class="fas fa-home"></i> होम पेज पर लौटें</a>
+    </div>
+</div>
+
+<!-- Modal for Member List -->
+<div class="modal fade" id="memberModal" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header" style="background:#2a5f3e; color:white;">
+                <h5 class="modal-title"><i class="fas fa-users"></i> सदस्य सूची</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body" id="memberModalBody">
+                <div class="text-center py-3">लोड हो रहा है...</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal for Work Team -->
+<div class="modal fade" id="workModal" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header" style="background:#b87c4f; color:white;">
+                <h5 class="modal-title"><i class="fas fa-hard-hat"></i> कार्य टीम</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body" id="workModalBody">
+                <div class="text-center py-3">लोड हो रहा है...</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="social-icons mb-3">
+            <a href="#"><i class="fab fa-facebook-f"></i></a>
+            <a href="#"><i class="fab fa-instagram"></i></a>
+            <a href="#"><i class="fab fa-youtube"></i></a>
+            <a href="#"><i class="fab fa-twitter"></i></a>
+        </div>
+        <p>© 2026 युवा कमेटी (बरेली) | सभी अधिकार सुरक्षित</p>
+        <p>निस्वार्थ सेवा ही हमारा धर्म है।</p>
+    </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+    // ==================== GOOGLE SHEETS SETUP ====================
+    const API_KEY = "AIzaSyDyYGbNGoxSmOCxM3AWIByds9g0zbOUY-g";
+    const SHEET_ID = "1oAuyfC-Ks29yhXS_UMmFeTu54tNaJWGC7adZURQMRTc";
+    const PROGRAMME_SHEET = "Programmes";  // A:S.No, B:Years, C:Programme, D:Status, E:MemberList, F:WorkTeam
+
+    let programmes = [];
+
+    function escapeHtml(str) {
+        if (!str) return "";
+        return str.replace(/[&<>]/g, function(m) {
+            if (m === '&') return '&amp;';
+            if (m === '<') return '&lt;';
+            if (m === '>') return '&gt;';
+            return m;
+        });
+    }
+
+    async function fetchProgrammes() {
+        const tbody = document.getElementById("programmeTbody");
+        try {
+            const url = `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/${PROGRAMME_SHEET}?key=${API_KEY}`;
+            const res = await fetch(url);
+            if (!res.ok) throw new Error(`HTTP ${res.status}`);
+            const data = await res.json();
+            const rows = data.values || [];
+            if (rows.length < 2) throw new Error("Programmes sheet empty");
+            
+            tbody.innerHTML = "";
+            for (let i = 1; i < rows.length; i++) {
+                const row = rows[i];
+                if (!row[0]) continue;
+                const sno = row[0];
+                const year = row[1] || "";
+                const programme = row[2] || "";
+                const status = row[3] || "";
+                const memberListRaw = row[4] || "";
+                const workListRaw = row[5] || "";
+                
+                // Parse member list and work list (comma separated)
+                const members = memberListRaw.split(',').map(s => s.trim()).filter(s => s);
+                const workers = workListRaw.split(',').map(s => s.trim()).filter(s => s);
+                
+                const tr = document.createElement("tr");
+                tr.innerHTML = `
+                    <td>${escapeHtml(sno)}</td>
+                    <td>${escapeHtml(year)}</td>
+                    <td>${escapeHtml(programme)}</td>
+                    <td><span class="status-badge">${escapeHtml(status)}</span></td>
+                    <td><button class="btn-sm-custom member-btn" data-members='${JSON.stringify(members)}'>📋 सदस्य सूची</button></td>
+                    <td><button class="btn-sm-custom work-btn" data-workers='${JSON.stringify(workers)}'>👷 कार्य टीम</button></td>
+                `;
+                tbody.appendChild(tr);
+            }
+            
+            // Attach event listeners for modals
+            document.querySelectorAll('.member-btn').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    const membersJson = btn.getAttribute('data-members');
+                    const members = JSON.parse(membersJson);
+                    showMemberModal(members);
+                });
+            });
+            document.querySelectorAll('.work-btn').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    const workersJson = btn.getAttribute('data-workers');
+                    const workers = JSON.parse(workersJson);
+                    showWorkModal(workers);
+                });
+            });
+        } catch (err) {
+            console.error(err);
+            tbody.innerHTML = `<tr><td colspan="6" class="text-center text-danger">❌ डेटा लोड नहीं हुआ: ${err.message}<br><br>✅ उपाय:<br>1. शीट को Publish to web करें (File → Share → Publish to web → Entire document)<br>2. सुनिश्चित करें टैब का नाम "${PROGRAMME_SHEET}" हो</td></tr>`;
+        }
+    }
+
+    function showMemberModal(members) {
+        const modalBody = document.getElementById("memberModalBody");
+        if (!members.length) {
+            modalBody.innerHTML = "<p class='text-muted text-center py-3'>कोई सदस्य सूची उपलब्ध नहीं है।</p>";
+        } else {
+            let html = `<div class="modal-list">`;
+            members.forEach(name => {
+                html += `<div class="list-item"><i class="fas fa-user-circle"></i> ${escapeHtml(name)}</div>`;
+            });
+            html += `</div>`;
+            modalBody.innerHTML = html;
+        }
+        new bootstrap.Modal(document.getElementById("memberModal")).show();
+    }
+
+    function showWorkModal(workers) {
+        const modalBody = document.getElementById("workModalBody");
+        if (!workers.length) {
+            modalBody.innerHTML = "<p class='text-muted text-center py-3'>कोई कार्य टीम उपलब्ध नहीं है।</p>";
+        } else {
+            let html = `<div class="modal-list">`;
+            workers.forEach(name => {
+                html += `<div class="list-item"><i class="fas fa-hard-hat"></i> ${escapeHtml(name)}</div>`;
+            });
+            html += `</div>`;
+            modalBody.innerHTML = html;
+        }
+        new bootstrap.Modal(document.getElementById("workModal")).show();
+    }
+
+    // Load data on page load
+    fetchProgrammes();
+</script>
+</body>
+</html>
